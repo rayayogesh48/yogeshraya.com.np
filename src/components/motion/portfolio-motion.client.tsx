@@ -1,49 +1,119 @@
 "use client";
 
-import {
-  MotionConfig,
-  motion,
-  useAnimate,
-  useInView,
-  useReducedMotion,
-} from "motion/react";
-import { useEffect } from "react";
+import { MotionConfig, motion, type Variants } from "motion/react";
+import type { ReactNode } from "react";
 
-export function PortfolioMotion({ children }: { children: React.ReactNode }) {
-  return (
-    <MotionConfig
-      reducedMotion="user"
-      transition={{ type: "spring", stiffness: 280, damping: 30 }}
-    >
-      {children}
-    </MotionConfig>
-  );
+export const EASE = [0.22, 1, 0.36, 1] as const;
+
+export function PortfolioMotion({ children }: { children: ReactNode }) {
+  return <MotionConfig reducedMotion="user">{children}</MotionConfig>;
 }
 
+type RevealTag = "div" | "p" | "span" | "nav" | "footer" | "section" | "ul" | "header";
+
+const shown = { opacity: 1, y: 0, filter: "blur(0px)" };
+
+/** Fades and un-blurs its children upward, on mount or when scrolled into view. */
 export function Reveal({
   children,
   className,
+  delay = 0,
+  y = 14,
+  as = "div",
+  onMount = false,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
+  delay?: number;
+  y?: number;
+  as?: RevealTag;
+  onMount?: boolean;
 }) {
-  const [scope, animate] = useAnimate();
-  const inView = useInView(scope, { once: true, margin: "0px 0px -24px 0px" });
-  const reduced = useReducedMotion();
-  useEffect(() => {
-    if (inView && !reduced) {
-      const animation = animate(
-        scope.current,
-        { transform: ["translateY(10px)", "translateY(0px)"] },
-        { duration: 0.35, ease: [0.23, 1, 0.32, 1] },
-      );
-      return () => animation.stop();
-    }
-  }, [inView, reduced, animate, scope]);
-  // Content stays readable in server HTML, with JavaScript disabled, and if observers fail.
+  const Tag = motion[as];
   return (
-    <motion.div ref={scope} className={className}>
+    <Tag
+      className={className}
+      initial={{ opacity: 0, y, filter: "blur(6px)" }}
+      {...(onMount ? { animate: shown } : { whileInView: shown, viewport: { once: true, amount: 0.2 } })}
+      transition={{ duration: 0.7, delay, ease: EASE }}
+    >
       {children}
-    </motion.div>
+    </Tag>
   );
 }
+
+const wordContainer = (delay: number): Variants => ({
+  hidden: {},
+  show: { transition: { staggerChildren: 0.06, delayChildren: delay } },
+});
+const word: Variants = {
+  hidden: { opacity: 0, y: "0.35em", filter: "blur(8px)" },
+  show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.6, ease: EASE } },
+};
+
+/** A heading whose words blur in one after another. */
+export function WordReveal({
+  text,
+  as = "h2",
+  className,
+  delay = 0,
+  id,
+}: {
+  text: string;
+  as?: "h1" | "h2" | "h3";
+  className?: string;
+  delay?: number;
+  id?: string;
+}) {
+  const Tag = motion[as];
+  const words = text.split(" ");
+  return (
+    <Tag
+      id={id}
+      className={className}
+      variants={wordContainer(delay)}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.6 }}
+      aria-label={text}
+    >
+      {words.map((value, index) => (
+        <motion.span key={index} variants={word} className="word" aria-hidden="true">
+          {value}
+          {index < words.length - 1 ? " " : ""}
+        </motion.span>
+      ))}
+    </Tag>
+  );
+}
+
+/** Staggers children that use `staggerItem` as their variants. */
+export function Stagger({
+  children,
+  className,
+  gap = 0.08,
+  as = "div",
+}: {
+  children: ReactNode;
+  className?: string;
+  gap?: number;
+  as?: "div" | "ul";
+}) {
+  const Tag = motion[as];
+  return (
+    <Tag
+      className={className}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.15 }}
+      variants={{ hidden: {}, show: { transition: { staggerChildren: gap } } }}
+    >
+      {children}
+    </Tag>
+  );
+}
+
+export const staggerItem: Variants = {
+  hidden: { opacity: 0, y: 16, filter: "blur(6px)" },
+  show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.6, ease: EASE } },
+};

@@ -1,11 +1,11 @@
 import { ProjectCard } from "./project-card";
+import { Stagger } from "@/components/motion/portfolio-motion.client";
 import type { WorkSummary } from "@/content/types";
 
 export function WorkCollection({ publishedStudies }: { publishedStudies: WorkSummary[] }) {
   return (
     <div className="page-width subpage">
       <header className="page-heading">
-        <span className="eyebrow">Problems, decisions & details</span>
         <h1>
           My Work
           <span className="heading-count">
@@ -17,11 +17,11 @@ export function WorkCollection({ publishedStudies }: { publishedStudies: WorkSum
           usability, and visual craft.
         </p>
       </header>
-      <div className="project-list">
+      <Stagger className="projects" gap={0.12}>
         {publishedStudies.map((study, index) => (
           <ProjectCard key={study.slug} study={study} index={index} />
         ))}
-      </div>
+      </Stagger>
       {!publishedStudies.length && (
         <p className="empty-state">Selected projects will appear here.</p>
       )}

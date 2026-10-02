@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getPublishedBlogPost, listPublishedBlogPosts } from "@/content/server";
 import { BlogDetail } from "@/features/blog/blog-detail";
 import { pageMetadata } from "@/lib/seo";
+import { insightPath } from "@/config/routes";
 
 type Props = { params: Promise<{ slug: string }> };
 export const dynamicParams = false;
@@ -11,7 +12,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props) {
   const post = getPublishedBlogPost((await params).slug);
   if (!post) notFound();
-  const metadata = pageMetadata(post.title, post.description, `/blog/${post.slug}`);
+  const metadata = pageMetadata(post.title, post.description, insightPath(post.slug));
   return {
     ...metadata,
     openGraph: { ...metadata.openGraph, type: "article" as const, publishedTime: post.date, authors: ["Yogesh Raya"] },

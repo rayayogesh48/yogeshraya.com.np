@@ -10,7 +10,7 @@ body {
   margin: 0;
   background: var(--page);
   color: var(--text);
-  font-family: var(--font-inter), Inter, system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.65;
   font-feature-settings:

@@ -4,7 +4,8 @@ export type Collection = "work" | "blog" | "craft";
 export type ContentRecord = WorkEntry | BlogEntry | CraftEntry;
 
 export type WorkEntry = WorkFields & { slug: string; content: string };
-export type WorkSummary = Omit<WorkEntry, "content" | "status">;
+// Related insights resolve on the server; summaries reach client components and must not expose draft slugs.
+export type WorkSummary = Omit<WorkEntry, "content" | "status" | "relatedInsights">;
 export type BlogEntry = BlogFields & { slug: string; content: string; readingTime: string };
 export type BlogSummary = Omit<BlogEntry, "content" | "status">;
 export type CraftEntry = CraftFields & { slug: string; content: string };

@@ -29,6 +29,11 @@ export const workSchema = z.object({
     (images) => new Set(images.map((image) => image.src)).size === images.length,
     "Gallery images must have unique sources",
   ).optional(),
+  /** Blog slugs, in display order, shown as "Related insights" on the case study. */
+  relatedInsights: z.array(z.string().regex(/^[\w-]+$/, "Use a blog slug such as designing-clearer-product-flows")).refine(
+    (slugs) => new Set(slugs).size === slugs.length,
+    "Related insights must not repeat a slug",
+  ).optional(),
 }).strict();
 
 export const blogSchema = z.object({

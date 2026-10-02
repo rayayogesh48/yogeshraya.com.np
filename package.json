@@ -11,7 +11,7 @@
     "content:check": "tsx scripts/validate-content.ts",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
-    "test:figma": "playwright test tests/figma-home.spec.ts",
+    "test:home": "playwright test tests/home.spec.ts",
     "check": "npm run lint && npm run content:check && npm run test:unit && npm run build && npm run typecheck"
   },
   "dependencies": {

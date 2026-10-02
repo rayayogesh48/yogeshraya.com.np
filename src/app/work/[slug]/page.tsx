@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getPublishedWork, listPublishedWork } from "@/content/server";
+import { getPublishedWork, listPublishedWork, listRelatedInsights } from "@/content/server";
 import { WorkDetail } from "@/features/work/work-detail";
 import { pageMetadata } from "@/lib/seo";
 
@@ -16,5 +16,5 @@ export async function generateMetadata({ params }: Props) {
 export default async function Page({ params }: Props) {
   const study = getPublishedWork((await params).slug);
   if (!study) notFound();
-  return <WorkDetail study={study} />;
+  return <WorkDetail study={study} insights={listRelatedInsights(study)} />;
 }

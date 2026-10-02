@@ -5,7 +5,6 @@ export function CraftPageContent({ items }: { items: CraftSummary[] }) {
   return (
     <div className="page-width subpage">
       <header className="page-heading">
-        <span className="eyebrow">An eye for the details</span>
         <h1>Craft</h1>
         <p>
           Interface details, website explorations, and small design studies. A

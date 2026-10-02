@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { CraftCollection } from "@/features/craft/craft-collection.client";
-import { formatDate } from "@/features/blog/article-list";
+import { formatDate } from "@/features/blog/format-date";
 import type { CraftSummary } from "@/content/types";
 
 export function CraftDetail({ item, items }: { item: CraftSummary; items: CraftSummary[] }) {
@@ -27,15 +27,10 @@ export function CraftDetail({ item, items }: { item: CraftSummary; items: CraftS
         height={item.image.height}
       />
       <header className="page-heading">
-        <span className="eyebrow">
-          {item.category}
-          {item.date && (
-            <>
-              {" "}
-              · <time dateTime={item.date}>{formatDate(item.date)}</time>
-            </>
-          )}
-        </span>
+        <div className="article-meta">
+          <span>{item.category}</span>
+          {item.date && <time dateTime={item.date}>{formatDate(item.date)}</time>}
+        </div>
         <h1>{item.title}</h1>
         <p>{item.description}</p>
       </header>

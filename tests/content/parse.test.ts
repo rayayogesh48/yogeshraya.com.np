@@ -16,4 +16,9 @@ describe("content parser", () => {
     expect(() => parseContent("blog", "sample", "sample.md", "---\ntitle: Sample\ndescription: Test\ndate: \"2026-02-30\"\nstatus: published\n---\nBody"))
       .toThrow(/date/);
   });
+
+  it("rejects repeated related insight slugs", () => {
+    expect(() => parseContent("work", "sample", "sample.md", "---\ntitle: Sample\nsummary: Test\nrole: Designer\ntags: []\nkind: showcase\nstatus: draft\nrelatedInsights: [a, a]\n---\n"))
+      .toThrow(/must not repeat/);
+  });
 });

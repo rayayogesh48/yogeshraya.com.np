@@ -1,5 +1,18 @@
+export interface InlineMark {
+  name: string;
+  mark: string;
+  color: string;
+  href?: string;
+}
+
 export interface AboutData {
   name: string;
+  /** Shown beside the first name when the avatar is pressed. */
+  nativeName?: string;
+  country: string;
+  timeZone: string;
+  company?: InlineMark;
+  products: InlineMark[];
   role: string;
   headline: string;
   intro: string;
@@ -16,6 +29,11 @@ export interface AboutData {
 
 export const aboutData: AboutData = {
   name: "Yogesh Raya",
+  nativeName: "योगेश",
+  country: "Nepal",
+  timeZone: "Asia/Kathmandu",
+  company: { name: "Bytecare Technology", mark: "B", color: "#e2483d" },
+  products: [{ name: "Briz", mark: "B", color: "#4f46e5", href: "/work/briz-mobile-workflow" }],
   role: "Product Designer",
   headline: "Product designer focused on making complex tasks feel simple.",
   intro:

@@ -30,6 +30,12 @@ experienceSchema.parse(experiences);
 const publishedWork = new Set(catalog.work.filter((item) => item.status === "published").map((item) => item.slug));
 const publishedBlog = new Set(catalog.blog.filter((item) => item.status === "published").map((item) => item.slug));
 const publishedCraft = new Set(catalog.craft.filter((item) => item.status === "published").map((item) => item.slug));
+const knownBlog = new Set(catalog.blog.map((item) => item.slug));
+for (const study of catalog.work) {
+  for (const slug of study.relatedInsights ?? []) {
+    if (!knownBlog.has(slug)) throw new Error(`work/${study.slug}: relatedInsights references missing article ${slug}`);
+  }
+}
 for (const role of experiences) {
   if (role.caseStudySlug && !publishedWork.has(role.caseStudySlug)) {
     throw new Error(`Experience ${role.company} references unpublished or missing work: ${role.caseStudySlug}`);
@@ -45,9 +51,9 @@ for (const [collection, entries] of Object.entries(catalog)) {
         throw new Error(`${collection}/${entry.slug}: missing referenced image ${asset}`);
       }
     }
-    for (const match of entry.content.matchAll(/\]\(\/(work|blog|craft)\/([\w-]+)(?:#[\w-]+)?\)/g)) {
+    for (const match of entry.content.matchAll(/\]\(\/(work|insight|craft)\/([\w-]+)(?:#[\w-]+)?\)/g)) {
       const [, target, slug] = match;
-      const slugs = target === "work" ? publishedWork : target === "blog" ? publishedBlog : publishedCraft;
+      const slugs = target === "work" ? publishedWork : target === "insight" ? publishedBlog : publishedCraft;
       if (!slugs.has(slug)) throw new Error(`${collection}/${entry.slug}: link to missing or unpublished ${target}/${slug}`);
     }
   }

@@ -1,11 +1,12 @@
 import type { MetadataRoute } from "next";
 import { listPublishedBlogPosts, listPublishedCraft, listPublishedWork } from "@/content/server";
 import { isPublicSite, siteUrl } from "@/config/site";
+import { insightPath, insightsPath } from "@/config/routes";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   if (!isPublicSite) return [];
   return [
-    ...["", "/work", "/about", "/craft", "/blog"].map((route) => ({
+    ...["", "/work", "/about", "/craft", insightsPath].map((route) => ({
       url: `${siteUrl}${route}`,
       priority: route ? 0.8 : 1,
     })),
@@ -18,7 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       ...(item.date ? { lastModified: new Date(item.date) } : {}),
     })),
     ...listPublishedBlogPosts().map((post) => ({
-      url: `${siteUrl}/blog/${post.slug}`,
+      url: `${siteUrl}${insightPath(post.slug)}`,
       lastModified: new Date(post.date),
       priority: 0.7,
     })),

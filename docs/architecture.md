@@ -1,6 +1,6 @@
 # Portfolio architecture
 
-This is one Next.js 15 App Router application and one deployment. It uses React 19, TypeScript, Tailwind CSS 4, Motion, local Markdown content, and no database or CMS. The current public routes are `/`, `/work`, `/work/[slug]`, `/about`, `/craft`, `/craft/[slug]`, `/blog`, and `/blog/[slug]`.
+This is one Next.js 15 App Router application and one deployment. It uses React 19, TypeScript, Tailwind CSS 4, Motion, local Markdown content, and no database or CMS. The current public routes are `/`, `/work`, `/work/[slug]`, `/about`, `/craft`, `/craft/[slug]`, `/insight`, and `/insight/[slug]` (articles are stored in `content/blog`; `/blog` URLs redirect to `/insight`).
 
 `src/app` handles URLs, static params, metadata, and not-found behavior. Page layouts live in `src/features`. Reusable controls, media, Markdown, motion, the site shell, and theme behavior live in `src/components`. `content/site` holds typed profile and experience data; `content/work`, `content/blog`, and `content/craft` hold authored Markdown. `src/content` owns file discovery, parsing, schemas, publication policy, and public projections. Only routes import `src/content/server.ts`; UI receives typed props.
 

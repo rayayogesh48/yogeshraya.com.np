@@ -1,15 +1,16 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { MarkdownContent } from "@/components/markdown/markdown";
-import { formatDate } from "@/features/blog/article-list";
+import { formatDate } from "@/features/blog/format-date";
 import type { BlogEntry } from "@/content/types";
+import { insightsPath } from "@/config/routes";
 
 export function BlogDetail({ post }: { post: BlogEntry }) {
   return (
     <article className="page-width subpage">
-      <Link href="/blog" className="text-link back-link">
+      <Link href={insightsPath} className="text-link back-link">
         <ArrowLeft size={15} />
-        Back to Blog
+        Back to Insights
       </Link>
       <header className="page-heading article-heading">
         <div className="article-meta">
@@ -18,12 +19,6 @@ export function BlogDetail({ post }: { post: BlogEntry }) {
         </div>
         <h1>{post.title}</h1>
         <p>{post.description}</p>
-        <Link href="/about" className="author-link">
-          <span className="author-avatar" aria-hidden="true">
-            yr.
-          </span>
-          Yogesh Raya<span className="muted">Product Designer</span>
-        </Link>
         {post.cover && (
           <img
             className="article-cover"
@@ -36,9 +31,9 @@ export function BlogDetail({ post }: { post: BlogEntry }) {
       </header>
       <MarkdownContent content={post.content} />
       <div className="article-footer">
-        <Link href="/blog" className="text-link">
+        <Link href={insightsPath} className="text-link">
           <ArrowLeft size={15} />
-          Back to Blog
+          Back to Insights
         </Link>
         <Link href="/work" className="text-link">
           Explore my work

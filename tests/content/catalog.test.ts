@@ -2,14 +2,14 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { assertUniqueSlugs, getWork, listWork } from "../../src/content/catalog";
+import { assertUniqueSlugs, getWork, listBlogBySlugs, listWork } from "../../src/content/catalog";
 import { workSummary } from "../../src/content/projections";
 
 const roots: string[] = [];
-function fixture(files: Record<string, string>) {
+function fixture(files: Record<string, string>, collection = "work") {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "portfolio-content-"));
   roots.push(root);
-  const directory = path.join(root, "content", "work");
+  const directory = path.join(root, "content", collection);
   fs.mkdirSync(directory, { recursive: true });
   for (const [name, content] of Object.entries(files)) fs.writeFileSync(path.join(directory, name), content);
   return root;
@@ -26,6 +26,7 @@ describe("work catalog", () => {
     const summary = workSummary(getWork("first", root)!);
     expect(summary).not.toHaveProperty("content");
     expect(summary).not.toHaveProperty("status");
+    expect(summary).not.toHaveProperty("relatedInsights");
   });
 
   it("rejects case-insensitive duplicate slugs", () => {
@@ -35,5 +36,19 @@ describe("work catalog", () => {
   it("fails a missing published asset", () => {
     const root = fixture({ "sample.md": work("published", 1).replace("---\nBody", "cover:\n  src: /images/missing.webp\n  alt: Preview\n  width: 800\n  height: 600\n---\nBody") });
     expect(() => listWork(root)).toThrow(/missing local asset/);
+  });
+});
+
+const article = (status: string, date: string) => `---\ntitle: Article ${date}\ndescription: Test\ndate: "${date}"\nstatus: ${status}\n---\nBody`;
+
+describe("related insights", () => {
+  it("keeps the requested order and skips drafts and unknown slugs", () => {
+    const root = fixture({
+      "newer.md": article("published", "2026-09-01"),
+      "older.md": article("published", "2026-01-01"),
+      "unfinished.md": article("draft", "2026-05-01"),
+    }, "blog");
+    expect(listBlogBySlugs(["older", "unfinished", "missing", "newer"], root).map(({ slug }) => slug)).toEqual(["older", "newer"]);
+    expect(listBlogBySlugs([], root)).toEqual([]);
   });
 });

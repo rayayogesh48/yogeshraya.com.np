@@ -5,8 +5,7 @@ export function BlogCollection({ posts }: { posts: BlogSummary[] }) {
   return (
     <div className="page-width subpage">
       <header className="page-heading">
-        <span className="eyebrow">Notes from the process</span>
-        <h1>Writing</h1>
+        <h1>Insights</h1>
         <p>
           My thoughts on product design, useful feedback, and solving the right
           problems.

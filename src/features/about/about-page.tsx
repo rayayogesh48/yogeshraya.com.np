@@ -8,7 +8,7 @@ import {
   Download,
 } from "lucide-react";
 import { aboutData, personal } from "@site/profile";
-import { StrengthsSection } from "@/features/home/strengths-section";
+import { StrengthsSection } from "@/features/home/strengths-section.client";
 import { NepalClock } from "@/components/site/nepal-clock.client";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { CopyEmail } from "@/components/site/copy-email.client";
@@ -16,7 +16,6 @@ export function AboutPage() {
   return (
     <div className="page-width subpage">
       <header className="page-heading">
-        <span className="eyebrow">A little about me</span>
         <h1>
           Making complex tasks
           <br className="desktop-break" /> feel simple.
@@ -87,7 +86,6 @@ export function AboutPage() {
         <blockquote className="philosophy">{personal.philosophy}</blockquote>
       </section>
       <section className="section contact-section" id="contact">
-        <span className="eyebrow">Let’s connect</span>
         <h2>
           Have a product problem
           <br />
@@ -100,7 +98,7 @@ export function AboutPage() {
                 Get in touch
                 <ArrowUpRight size={16} />
               </a>
-              <CopyEmail email={aboutData.email} />
+              <CopyEmail />
             </>
           ) : (
             <a

@@ -2,7 +2,7 @@ import { aboutData } from "@site/profile";
 
 export const siteName = aboutData.name;
 export const siteDescription =
-  `Product design, clear user flows, and thoughtful interfaces. The work and writing of ${siteName}, a product designer based in Nepal.`;
+  `Product design, clear user flows, and thoughtful interfaces. The work and insights of ${siteName}, a product designer based in Nepal.`;
 
 const suppliedOrigin = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
 const deployment = process.env.VERCEL_ENV;

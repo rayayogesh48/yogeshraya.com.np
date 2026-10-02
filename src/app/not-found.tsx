@@ -4,7 +4,6 @@ export default function NotFound() {
   return (
     <div className="page-width subpage">
       <header className="page-heading">
-        <span className="eyebrow">404 · Page not found</span>
         <h1>A little off the path.</h1>
         <p>This page may have moved, or it isn’t available yet.</p>
       </header>

@@ -45,6 +45,11 @@ export function listCraft(root?: string): CraftEntry[] { return sortCraft(entrie
 export function getWork(slug: string, root?: string) { return listWork(root).find((entry) => entry.slug === slug); }
 export function getBlog(slug: string, root?: string) { return listBlog(root).find((entry) => entry.slug === slug); }
 export function getCraft(slug: string, root?: string) { return listCraft(root).find((entry) => entry.slug === slug); }
+/** Published articles for the given slugs, in the given order; drafts and unknown slugs are skipped. */
+export function listBlogBySlugs(slugs: readonly string[], root?: string): BlogEntry[] {
+  const published = new Map(listBlog(root).map((entry) => [entry.slug, entry]));
+  return slugs.flatMap((slug) => published.get(slug) ?? []);
+}
 export function validateCatalog(root?: string) {
   return { work: entries("work", root), blog: entries("blog", root), craft: entries("craft", root) };
 }

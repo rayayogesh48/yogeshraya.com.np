@@ -8,6 +8,9 @@ tags:
   - "Dashboard UX"
   - "Information Architecture"
 featuredOrder: 1
+relatedInsights:
+  - "what-should-a-dashboard-show-first"
+  - "designing-clearer-product-flows"
 kind: "case-study"
 status: "published"
 ---

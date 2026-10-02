@@ -8,6 +8,9 @@ tags:
   - "User Research"
   - "Interaction Design"
 featuredOrder: 2
+relatedInsights:
+  - "designing-clearer-product-flows"
+  - "better-product-design-feedback"
 kind: "case-study"
 gallery:
   - src: "/images/case-studies/agent-mesh.svg"

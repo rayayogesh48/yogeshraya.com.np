@@ -1,6 +1,6 @@
 # Yogesh Raya — Product Design Portfolio
 
-A narrow, responsive portfolio built with Next.js, React, TypeScript, Motion for React, and static Markdown. The home page follows the supplied [Figma frame](https://www.figma.com/design/WBxilPJIVmVdEMutum6eXp/Briz-Web?node-id=1351-6144), keeping Yogesh’s own content. Dark is the initial theme; saved Light/System choices still work. See [Figma implementation notes](docs/figma-implementation.md) for measurements, local assets, content differences, and the reference’s known low-contrast text.
+A narrow, responsive portfolio built with Next.js, React, TypeScript, Motion for React, and static Markdown. The interface is a single ~734px column of stacked sections with a floating dock: an interactive starfield banner, blur-in word reveals, draggable project carousels, an expanding experience timeline, a hover-to-reveal strengths list, a particle-star About section, and a footer with local time. Dark is the initial theme; saved Light/System choices still work. The grey text is a little lighter than the original design so it meets WCAG AA contrast. Earlier [Figma implementation notes](docs/figma-implementation.md) describe the previous design.
 
 ## Development
 
@@ -10,13 +10,13 @@ npm run dev
 npm run check
 ```
 
-The app includes Home, Work and case studies, About, Craft and artwork details, and a Markdown Blog. Existing `/work/[slug]` and `/blog/[slug]` routes and home anchors are preserved.
+The app includes Home, Work and case studies, About, Craft and artwork details, and Markdown articles published as Insights. Insights live at `/insight` and `/insight/[slug]`; old `/blog` URLs permanently redirect there.
 
 ## Content
 
 - `content/site/`: typed profile, strengths, and verified experience records.
 - `content/work/`: one Markdown file per project, with metadata and story together. The existing three public projects remain published; the previously unlisted story is an explicit draft.
-- `content/blog/`: Markdown articles. The feedback article remains a draft.
+- `content/blog/`: Markdown articles, shown as **Insights** at `/insight/...`. The feedback article remains a draft. Case studies can list related articles with `relatedInsights`.
 - `content/craft/`: approved artwork can be added here; the collection is intentionally empty today.
 
 All collections use `status: draft | published`. A single validated catalog supplies lists, details, home sections, metadata, static routes, and the sitemap. See [content authoring](docs/content-authoring.md) for required fields and examples.
@@ -40,10 +40,10 @@ Optional content is omitted or presented honestly: no invented email, resume lin
 
 ## Interactions and accessibility
 
-- Dock with labeled destinations and active state; keyboard-accessible settings with focus return, Escape/outside dismissal, System/Light/Dark persistence, English and a Nepali availability label.
-- Experience and strengths use buttons with expanded state and associated detail regions.
-- Multi-image projects support bounded drag, buttons, announced slide position, stable image dimensions, and click suppression after a drag. Single images hide controls.
-- Optional email control supports M, ignores editable fields and modified shortcuts, reports successful clipboard writes, and provides a mail fallback on failure.
+- Dock with a sliding active pill and expanding label. On the home page it follows the section in view and scrolls to sections; elsewhere it links to pages. Settings expand inside the dock with System/Light/Dark persistence, Escape/outside dismissal with focus return, English, and a Nepali "coming soon" label.
+- Experience entries and strengths use buttons with expanded state. Strengths preview on hover and pin on click or tap.
+- Project carousels support drag/flick, arrow keys, buttons, dots, and an announced slide position. Projects without images show decorative mock screens; single images hide controls.
+- When an email is configured, M copies it from any page (ignoring editable fields and modified shortcuts) and a toast confirms it.
 - Motion respects reduced-motion preferences. Server-rendered primary text remains visible without JavaScript.
 
 ## Browser checks
@@ -51,11 +51,11 @@ Optional content is omitted or presented honestly: no invented email, resume lin
 ```sh
 npx playwright install chromium
 npm run check
-npm run test:figma
+npm run test:home
 # Full portfolio regression suite:
 npm run test:e2e
 ```
 
-Checks cover desktop/mobile layouts, route navigation, light/dark contrast, theme persistence, settings focus, disclosures, draft/unknown-page 404s, readable server HTML, and dock clearance. Failure traces and browser reports go to ignored output folders.
+Checks cover desktop/mobile layouts, carousels, dock section tracking, route navigation, light/dark accessibility (axe, no exceptions), theme persistence, settings focus, disclosures, draft/unknown-page 404s, readable server HTML, and dock clearance. Failure traces and browser reports go to ignored output folders.
 
 See [architecture](docs/architecture.md), [the imported requirement brief](docs/portfolio-requirements.md), and [implementation notes](docs/implementation-notes.md) for structure, scope, and content-dependent states.
