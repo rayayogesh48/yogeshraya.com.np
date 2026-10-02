@@ -1,7 +1,7 @@
 /* One narrow centered column of stacked sections, with a floating dock at the bottom. */
 
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
-body { transition: background-color 0.4s var(--ease), color 0.4s var(--ease); overflow-x: hidden; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: clip; }
+body { transition: background-color 0.4s var(--ease), color 0.4s var(--ease); overflow-x: clip; }
 ::selection { background: var(--fg); color: var(--bg); }
 :focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; border-radius: 8px; }
 [lang="ne"] { font-family: var(--font-deva); }
@@ -69,8 +69,8 @@ body { transition: background-color 0.4s var(--ease), color 0.4s var(--ease); ov
 .hl, .hero-link-text { color: var(--fg); }
 .hero-link-text { background-image: linear-gradient(currentColor, currentColor); background-size: 0% 1px; background-repeat: no-repeat; background-position: 0 100%; transition: background-size 0.35s var(--ease); }
 .hero-link:hover .hero-link-text { background-size: 100% 1px; }
-.hero-link .mark { transition: transform 0.3s var(--ease); }
-.hero-link:hover .mark { transform: rotate(-8deg) scale(1.1); }
+.hero-logo { display: block; width: 18px; height: 18px; border-radius: 5px; object-fit: cover; transition: transform 0.3s var(--ease); }
+.hero-link:hover .hero-logo { transform: rotate(-8deg) scale(1.1); }
 .mark { display: inline-grid; place-items: center; color: #fff; font-weight: 700; letter-spacing: -0.02em; flex-shrink: 0; overflow: hidden; line-height: 1; }
 .hero-hint { margin-top: 20px; font-size: 13px; color: var(--fg-2); display: flex; align-items: center; gap: 6px; }
 .hero-hint button { line-height: 0; }

@@ -7,18 +7,25 @@ import { aboutData, type InlineMark } from "@site/profile";
 import { EASE, Reveal } from "@/components/motion/portfolio-motion.client";
 import { TopoField } from "@/components/visual/topo-field.client";
 import { useToast } from "@/components/site/toast.client";
-import { ArrowUpRightIcon, DownloadIcon, Mark, NepalFlagIcon } from "@/components/ui/icons";
+import { ArrowUpRightIcon, DownloadIcon, NepalFlagIcon } from "@/components/ui/icons";
 
 function InlineLink({ item }: { item: InlineMark }) {
   const content: ReactNode = (
     <>
       <span className="hero-icon">
-        <Mark label={item.mark} color={item.color} size={18} />
+        <img className="hero-logo" src={item.logo} alt="" width={18} height={18} />
       </span>
       <span className="hero-link-text">{item.name}</span>
     </>
   );
   if (!item.href) return <span className="hero-inline-tag hl">{content}</span>;
+  if (/^https?:\/\//.test(item.href)) {
+    return (
+      <a className="hero-link" href={item.href} target="_blank" rel="noopener noreferrer">
+        {content}
+      </a>
+    );
+  }
   return (
     <Link className="hero-link" href={item.href}>
       {content}
@@ -39,7 +46,7 @@ export function Hero() {
   const { scrollY } = useScroll();
   const bannerY = useTransform(scrollY, [0, 400], [0, 60]);
   const bannerOpacity = useTransform(scrollY, [0, 400], [1, 0.4]);
-  const { name, nativeName, role, country, company, products, portrait, resume } = aboutData;
+  const { name, nativeName, role, country, company, products, studio, portrait, resume } = aboutData;
   const [firstName, ...otherNames] = name.split(" ");
 
   return (
@@ -100,13 +107,20 @@ export function Hero() {
             </span>
             <span className="hl">{country}</span>
           </span>
-          . I turn user problems into clear flows and thoughtful interfaces
+          .
+          {products.length > 0 && <> I design {joinProducts(products)}</>}
           {company && (
             <>
-              . I currently design at <InlineLink item={company} />
+              {" "}
+              at <InlineLink item={company} />
             </>
           )}
-          {products.length > 0 && <>, working on products like {joinProducts(products)}</>}.
+          {studio && (
+            <>
+              , and build digital products, websites, and Framer experiences through <InlineLink item={studio} />
+            </>
+          )}
+          .
         </Reveal>
         {email && (
           <Reveal onMount delay={0.34} className="hero-hint">

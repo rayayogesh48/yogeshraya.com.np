@@ -1,7 +1,6 @@
 export interface InlineMark {
   name: string;
-  mark: string;
-  color: string;
+  logo: string;
   href?: string;
 }
 
@@ -13,6 +12,8 @@ export interface AboutData {
   timeZone: string;
   company?: InlineMark;
   products: InlineMark[];
+  /** Independent studio for websites and Framer work. */
+  studio?: InlineMark;
   role: string;
   headline: string;
   intro: string;
@@ -32,8 +33,12 @@ export const aboutData: AboutData = {
   nativeName: "योगेश",
   country: "Nepal",
   timeZone: "Asia/Kathmandu",
-  company: { name: "Bytecare Technology", mark: "B", color: "#e2483d" },
-  products: [{ name: "Briz", mark: "B", color: "#4f46e5", href: "/work/briz-mobile-workflow" }],
+  company: { name: "Bytecare Technology", logo: "/images/logo/bytecare-logo.webp", href: "https://www.bytecaretech.com/" },
+  products: [
+    { name: "Karobar", logo: "/images/logo/karobar-logo.webp", href: "https://www.karobarapp.com/" },
+    { name: "Briz", logo: "/images/logo/briz-logo.webp", href: "https://www.brizmarket.com/en" },
+  ],
+  studio: { name: "Overlays Studio", logo: "/images/logo/overlay-logo.webp", href: "https://overlays-studio.framer.website/" },
   role: "Product Designer",
   headline: "Product designer focused on making complex tasks feel simple.",
   intro:
