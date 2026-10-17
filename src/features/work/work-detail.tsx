@@ -3,7 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { MarkdownContent } from "@/components/markdown/markdown";
 import { ProjectGallery } from "@/components/media/image-gallery.client";
 import type { BlogSummary, WorkEntry } from "@/content/types";
-import { ArticleList } from "@/features/blog/article-list";
+import { InsightList } from "@/features/blog/insight-list";
 import { insightsPath } from "@/config/routes";
 
 export function WorkDetail({ study, insights }: { study: WorkEntry; insights: BlogSummary[] }) {
@@ -36,7 +36,7 @@ export function WorkDetail({ study, insights }: { study: WorkEntry; insights: Bl
       {insights.length > 0 && (
         <section className="related-insights" aria-labelledby="related-insights-heading">
           <h2 id="related-insights-heading">Related insights</h2>
-          <ArticleList posts={insights} titleAs="h3" />
+          <InsightList posts={insights} titleAs="h3" showReadingTime />
         </section>
       )}
       <div className="article-footer">

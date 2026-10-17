@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, LayoutGroup, motion } from "motion/react";
 import { useEffect, useRef, useState, type ComponentType, type ReactNode } from "react";
 import { destinations, type DestinationIcon } from "@/config/navigation";
 import { useTheme } from "@/components/theme/theme-provider.client";
@@ -38,12 +38,22 @@ const themes: [Theme, string, IconComponent][] = [
   ["dark", "Dark", MoonIcon],
 ];
 
-/** On the home page, the active item follows whichever `[data-dock]` section is near the top of the viewport. */
+/**
+ * On the home page, the active item follows whichever `[data-dock]` section is near the top of the viewport.
+ * After a dock click, it holds the clicked section until the user scrolls again, so the pill neither stops on every
+ * section the smooth scroll passes nor jumps away when the clicked section can't reach the top.
+ */
 function useHomeSection(enabled: boolean) {
   const [section, setSection] = useState<string>("home");
+  /** True from a dock click until its smooth scroll ends. */
+  const holding = useRef(false);
+  const release = useRef<() => void>(() => {});
   useEffect(() => {
     if (!enabled) return;
-    const update = () => {
+    let frame = 0;
+    let fallback: ReturnType<typeof setTimeout> | undefined;
+    const detect = () => {
+      frame = 0;
       const threshold = window.innerHeight * 0.4;
       const sections = [...document.querySelectorAll<HTMLElement>("[data-dock]")];
       let current = "home";
@@ -54,15 +64,44 @@ function useHomeSection(enabled: boolean) {
       if (atBottom && sections.length) current = sections[sections.length - 1].dataset.dock ?? current;
       setSection(current);
     };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
+    const update = () => {
+      if (!holding.current && !frame) frame = requestAnimationFrame(detect);
+    };
+    // Browsers without `scrollend` fall back to "no scroll events for 150ms".
+    const supportsScrollEnd = "onscrollend" in window;
+    const end = () => {
+      clearTimeout(fallback);
+      holding.current = false;
+    };
+    release.current = () => {
+      clearTimeout(fallback);
+      fallback = setTimeout(end, 150);
+    };
+    const onScroll = () => {
+      if (!holding.current) return update();
+      // The click's scroll has started: let scrollend release the hold, or keep re-arming the fallback without it.
+      if (supportsScrollEnd) clearTimeout(fallback);
+      else release.current();
+    };
+    detect();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("scrollend", end);
     window.addEventListener("resize", update);
     return () => {
-      window.removeEventListener("scroll", update);
+      cancelAnimationFrame(frame);
+      clearTimeout(fallback);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("scrollend", end);
       window.removeEventListener("resize", update);
     };
   }, [enabled]);
-  return section;
+  const select = (next: string) => {
+    holding.current = true;
+    setSection(next);
+    // Covers a click that needs no scroll (no scroll or scrollend event follows) and browsers without scrollend.
+    release.current();
+  };
+  return [section, select] as const;
 }
 
 function scrollToSection(id: string) {
@@ -70,29 +109,33 @@ function scrollToSection(id: string) {
   else document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+/** Shared by the pill, icons and labels so everything in the bar moves as one layout animation. */
+const DOCK_SPRING = { type: "spring", stiffness: 500, damping: 38 } as const;
+
 function DockLabel({ label, active, Icon }: { label: string; active: boolean; Icon: IconComponent }) {
   return (
     <>
-      {active && (
-        <motion.span layoutId="dock-pill" className="dock-pill" transition={{ type: "spring", stiffness: 500, damping: 38 }} />
-      )}
-      <motion.span
-        className="dock-icon"
-        whileHover={{ y: -2 }}
-        whileTap={{ scale: 0.85 }}
-        transition={{ type: "spring", stiffness: 500, damping: 20 }}
-      >
-        <Icon size={16} filled={active} />
+      {active && <motion.span layoutId="dock-pill" className="dock-pill" transition={DOCK_SPRING} />}
+      <motion.span layout="position" className="dock-icon" transition={DOCK_SPRING}>
+        <motion.span
+          className="dock-icon-motion"
+          whileHover={{ y: -2 }}
+          whileTap={{ scale: 0.85 }}
+          transition={{ type: "spring", stiffness: 500, damping: 20 }}
+        >
+          <Icon size={16} filled={active} />
+        </motion.span>
       </motion.span>
-      <AnimatePresence initial={false}>
+      <AnimatePresence initial={false} mode="popLayout">
         {active && (
           <motion.span
+            layout="position"
             className="dock-label"
             aria-hidden="true"
-            initial={{ width: 0, opacity: 0, filter: "blur(4px)" }}
-            animate={{ width: "auto", opacity: 1, filter: "blur(0px)" }}
-            exit={{ width: 0, opacity: 0, filter: "blur(4px)" }}
-            transition={{ duration: 0.3, ease: EASE }}
+            initial={{ opacity: 0, filter: "blur(4px)" }}
+            animate={{ opacity: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, filter: "blur(4px)", transition: { duration: 0.15 } }}
+            transition={{ ...DOCK_SPRING, opacity: { duration: 0.25, ease: EASE }, filter: { duration: 0.25, ease: EASE } }}
           >
             <span>{label}</span>
           </motion.span>
@@ -231,7 +274,7 @@ function DockItem({
 export function Dock({ contactHref }: { contactHref: string }) {
   const path = usePathname();
   const onHome = path === "/";
-  const homeSection = useHomeSection(onHome);
+  const [homeSection, selectHomeSection] = useHomeSection(onHome);
   const { email, copyEmail } = useToast();
   const [open, setOpen] = useState(false);
   const dockRef = useRef<HTMLDivElement>(null);
@@ -274,58 +317,63 @@ export function Dock({ contactHref }: { contactHref: string }) {
       >
         <motion.div layout className="dock-container" transition={{ duration: 0.35, ease: EASE }}>
           <AnimatePresence initial={false}>{open && <SettingsPanel id="dock-settings" />}</AnimatePresence>
-          <nav className="dock-bar" aria-label="Main navigation">
-            {destinations.map(({ href, label, icon, section }) => {
-              const active = isActive(href, icon) && !open;
-              return (
-                <DockItem
-                  key={href}
-                  href={href}
-                  onHome={onHome}
-                  section={section}
-                  label={label}
-                  current={isActive(href, icon)}
-                  className={`dock-item ${active ? "is-active" : ""}`}
-                  onNavigate={() => setOpen(false)}
+          <LayoutGroup id="dock">
+            <nav className="dock-bar" aria-label="Main navigation">
+              {destinations.map(({ href, label, icon, section }) => {
+                const active = isActive(href, icon) && !open;
+                return (
+                  <DockItem
+                    key={href}
+                    href={href}
+                    onHome={onHome}
+                    section={section}
+                    label={label}
+                    current={isActive(href, icon)}
+                    className={`dock-item ${active ? "is-active" : ""}`}
+                    onNavigate={() => {
+                      setOpen(false);
+                      if (onHome) selectHomeSection(icon);
+                    }}
+                  >
+                    <DockLabel label={label} active={active} Icon={icons[icon]} />
+                  </DockItem>
+                );
+              })}
+              <span className="dock-separator" aria-hidden="true" />
+              {email ? (
+                <button type="button" className="dock-item" aria-label="Copy email" onClick={copyEmail}>
+                  <DockLabel label="Contact" active={false} Icon={MailIcon} />
+                </button>
+              ) : (
+                <a
+                  className="dock-item"
+                  href={contactHref}
+                  aria-label="Contact"
+                  {...(contactHref.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 >
-                  <DockLabel label={label} active={active} Icon={icons[icon]} />
-                </DockItem>
-              );
-            })}
-            <span className="dock-separator" aria-hidden="true" />
-            {email ? (
-              <button type="button" className="dock-item" aria-label="Copy email" onClick={copyEmail}>
-                <DockLabel label="Contact" active={false} Icon={MailIcon} />
+                  <DockLabel label="Contact" active={false} Icon={MailIcon} />
+                </a>
+              )}
+              <span className="dock-separator" aria-hidden="true" />
+              <button
+                ref={triggerRef}
+                type="button"
+                className={`dock-item ${open ? "is-open" : ""}`}
+                aria-label="Settings"
+                aria-expanded={open}
+                aria-controls="dock-settings"
+                onClick={() => setOpen((value) => !value)}
+              >
+                <motion.span
+                  className="dock-icon"
+                  animate={{ rotate: open ? 90 : 0 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 18 }}
+                >
+                  <GearIcon size={16} />
+                </motion.span>
               </button>
-            ) : (
-              <a
-                className="dock-item"
-                href={contactHref}
-                aria-label="Contact"
-                {...(contactHref.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              >
-                <DockLabel label="Contact" active={false} Icon={MailIcon} />
-              </a>
-            )}
-            <span className="dock-separator" aria-hidden="true" />
-            <button
-              ref={triggerRef}
-              type="button"
-              className={`dock-item ${open ? "is-open" : ""}`}
-              aria-label="Settings"
-              aria-expanded={open}
-              aria-controls="dock-settings"
-              onClick={() => setOpen((value) => !value)}
-            >
-              <motion.span
-                className="dock-icon"
-                animate={{ rotate: open ? 90 : 0 }}
-                transition={{ type: "spring", stiffness: 260, damping: 18 }}
-              >
-                <GearIcon size={16} />
-              </motion.span>
-            </button>
-          </nav>
+            </nav>
+          </LayoutGroup>
         </motion.div>
       </motion.div>
     </>

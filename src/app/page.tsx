@@ -1,6 +1,7 @@
 import { HomePage } from "@/features/home/home-page";
 import { listPublishedBlogPosts, listPublishedCraft, listPublishedWork } from "@/content/server";
 import { pageMetadata } from "@/lib/seo";
+import { JsonLd, personSchema, websiteSchema } from "@/lib/structured-data";
 
 export const metadata = pageMetadata(
   "Product Designer in Nepal",
@@ -10,5 +11,10 @@ export const metadata = pageMetadata(
 metadata.title = { absolute: "Yogesh Raya | Product Designer in Nepal" };
 
 export default function Page() {
-  return <HomePage work={listPublishedWork()} craft={listPublishedCraft()} posts={listPublishedBlogPosts()} />;
+  return (
+    <>
+      <JsonLd data={[personSchema(), websiteSchema()]} />
+      <HomePage work={listPublishedWork()} craft={listPublishedCraft()} posts={listPublishedBlogPosts()} />
+    </>
+  );
 }

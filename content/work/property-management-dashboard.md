@@ -3,6 +3,8 @@ title: "Property Management Dashboard"
 role: "Product Designer"
 timeline: "Design & UX Architecture"
 summary: "Property managers struggled to track unit maintenance, upcoming lease renewals, and tenant requests across fragmented spreadsheets and legacy portals."
+description: "UX case study: a property management dashboard that brings maintenance, lease renewals, and tenant requests into one clear view. By Yogesh Raya."
+updated: "2026-10-03"
 tags:
   - "Product Design"
   - "Dashboard UX"

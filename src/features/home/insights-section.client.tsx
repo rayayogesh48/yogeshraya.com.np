@@ -4,9 +4,9 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import type { BlogSummary } from "@/content/types";
 import { Reveal, Stagger, WordReveal, staggerItem } from "@/components/motion/portfolio-motion.client";
-import { formatDate } from "@/features/blog/format-date";
+import { InsightRow } from "@/features/blog/insight-list";
 import { ArrowUpRightIcon } from "@/components/ui/icons";
-import { insightPath, insightsPath } from "@/config/routes";
+import { insightsPath } from "@/config/routes";
 
 export function InsightsSection({ posts }: { posts: BlogSummary[] }) {
   return (
@@ -15,14 +15,8 @@ export function InsightsSection({ posts }: { posts: BlogSummary[] }) {
       {posts.length ? (
         <Stagger className="insights-list" gap={0.08}>
           {posts.slice(0, 3).map((post) => (
-            <motion.div variants={staggerItem} key={post.slug}>
-              <Link className="insights-row" href={insightPath(post.slug)}>
-                <span>
-                  <h3>{post.title}</h3>
-                  <p>{post.description}</p>
-                </span>
-                <time dateTime={post.date}>{formatDate(post.date)}</time>
-              </Link>
+            <motion.div className="insights-item" variants={staggerItem} key={post.slug}>
+              <InsightRow post={post} />
             </motion.div>
           ))}
         </Stagger>

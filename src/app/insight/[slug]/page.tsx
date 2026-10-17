@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getPublishedBlogPost, listPublishedBlogPosts } from "@/content/server";
 import { BlogDetail } from "@/features/blog/blog-detail";
 import { pageMetadata } from "@/lib/seo";
+import { JsonLd, articleSchema } from "@/lib/structured-data";
 import { insightPath } from "@/config/routes";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -21,5 +22,10 @@ export async function generateMetadata({ params }: Props) {
 export default async function Page({ params }: Props) {
   const post = getPublishedBlogPost((await params).slug);
   if (!post) notFound();
-  return <BlogDetail post={post} />;
+  return (
+    <>
+      <JsonLd data={articleSchema(post)} />
+      <BlogDetail post={post} />
+    </>
+  );
 }

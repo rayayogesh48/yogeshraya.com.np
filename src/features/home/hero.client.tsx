@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useScroll, useTransform } from "motion/react";
 import { useState, type ReactNode } from "react";
 import { aboutData, type InlineMark } from "@site/profile";
 import { EASE, Reveal } from "@/components/motion/portfolio-motion.client";
-import { TopoField } from "@/components/visual/topo-field.client";
+import { RangeField } from "@/components/visual/range-field.client";
 import { useToast } from "@/components/site/toast.client";
 import { ArrowUpRightIcon, DownloadIcon, NepalFlagIcon } from "@/components/ui/icons";
 
@@ -53,7 +53,7 @@ export function Hero() {
     <section className="hero" id="top" data-dock="home" aria-labelledby="profile-name">
       <Reveal onMount className="banner-wrap">
         <motion.div className="banner" style={{ y: bannerY, opacity: bannerOpacity }}>
-          <TopoField />
+          <RangeField />
         </motion.div>
         <motion.button
           type="button"

@@ -8,13 +8,13 @@ test.describe("home page", () => {
 
   test("hero shows the profile, Nepali name toggle, and CTA", async ({ page }) => {
     await expect(page.getByRole("heading", { level: 1, name: /Yogesh/ })).toBeVisible();
-    await expect(page.locator(".topo-field")).toBeVisible();
+    await expect(page.locator(".range-field")).toBeVisible();
     const avatar = page.getByRole("button", { name: "Show my name in Nepali" });
     await avatar.click();
     await expect(avatar).toHaveAttribute("aria-pressed", "true");
     await expect(page.locator(".name-hidden")).toContainText("योगेश");
-    await expect(page.getByRole("link", { name: "Bytecare Technology" })).toHaveCount(0);
-    await expect(page.locator(".hero-bio").getByRole("link", { name: "Briz", exact: true })).toHaveAttribute("href", "/work/briz-mobile-workflow");
+    await expect(page.locator(".hero-bio").getByRole("link", { name: "Bytecare Technology" })).toHaveAttribute("href", /bytecaretech\.com/);
+    await expect(page.locator(".hero-bio").getByRole("link", { name: "Briz", exact: true })).toHaveAttribute("href", /brizmarket\.com/);
     await page.locator(".hero-ctas").getByText("View work").click();
     await expect.poll(() => page.evaluate(() => document.getElementById("work")!.getBoundingClientRect().top)).toBeLessThan(100);
   });
@@ -51,7 +51,7 @@ test.describe("home page", () => {
   });
 
   test("experience and strengths expand", async ({ page }) => {
-    const job = page.getByRole("button", { name: /Bytecare Technology/ });
+    const job = page.getByRole("button", { name: /Karobar/ });
     await job.click();
     await expect(job).toHaveAttribute("aria-expanded", "true");
     await expect(page.getByRole("link", { name: "Explore the work" }).first()).toBeVisible();

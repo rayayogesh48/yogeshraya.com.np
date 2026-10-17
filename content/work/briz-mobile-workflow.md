@@ -3,6 +3,8 @@ title: "Briz — Simplifying Invoicing & Daily Tasks"
 role: "Product Designer · Bytecare Technology"
 timeline: "Product Design & Prototyping"
 summary: "Small business owners found multi-item invoicing and transaction tracking on mobile clumsy and slow, leading to billing mistakes and delayed customer payments."
+description: "UX case study: redesigning mobile invoicing in Briz so small business owners can bill multiple items faster, with fewer mistakes. By Yogesh Raya."
+updated: "2026-10-03"
 tags:
   - "Mobile UX"
   - "User Research"

@@ -32,6 +32,7 @@ export const aboutData: AboutData = {
   name: "Yogesh Raya",
   nativeName: "योगेश",
   country: "Nepal",
+  portrait: "/images/profile.webp",
   timeZone: "Asia/Kathmandu",
   company: { name: "Bytecare Technology", logo: "/images/logo/bytecare-logo.webp", href: "https://www.bytecaretech.com/" },
   products: [
@@ -81,11 +82,14 @@ export const strengths = [
 ];
 
 export const personal = {
-  focus: "Clear flows & thoughtful interfaces",
   languages: ["English", "Nepali"],
-  reading: "Not shared yet",
-  activity: "Not shared yet",
-  tools: ["Figma", "Mixpanel", "Microsoft Clarity", "Google Analytics"],
+  tools: [
+    { name: "Figma", use: "Interface design, prototyping, and handoff" },
+    { name: "Framer", use: "Websites and landing pages, from design to launch" },
+    { name: "Mixpanel", use: "Product analytics and funnels" },
+    { name: "Microsoft Clarity", use: "Session recordings and heatmaps" },
+    { name: "Google Analytics", use: "Traffic and acquisition" },
+  ],
   philosophy:
     "I want people to spend less effort understanding the interface and more time doing what they came to do. Clear flows, useful feedback, and thoughtful details matter because they help people move forward.",
 };

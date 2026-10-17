@@ -93,12 +93,12 @@ test("disclosures expose content by keyboard and dock navigates between pages", 
   page,
 }) => {
   await page.goto("/");
-  const experience = page.getByRole("button", { name: /Bytecare Technology/ });
+  const experience = page.getByRole("button", { name: /Karobar/ });
   await experience.focus();
   await page.keyboard.press("Enter");
   await expect(experience).toHaveAttribute("aria-expanded", "true");
   await expect(
-    page.getByText("Leading product design for mobile and web applications", {
+    page.getByText("Conducted research to understand user problems", {
       exact: false,
     }),
   ).toBeVisible();
@@ -180,7 +180,7 @@ test("primary content remains visible without JavaScript", async ({
     page.getByRole("heading", { name: "My Work", exact: false }),
   ).toBeVisible();
   await expect(
-    page.getByText("I turn user problems into clear flows", {
+    page.getByText("a Product Designer based in", {
       exact: false,
     }),
   ).toBeVisible();
@@ -193,7 +193,7 @@ test("reduced motion and mobile settings preserve usable controls", async ({
   await page.setViewportSize({ width: 320, height: 700 });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/about");
-  await expect(page.locator(".local-time")).not.toHaveText("--:--");
+  await expect(page.locator("footer .foot-time")).toContainText("in Nepal");
   await page.getByRole("button", { name: "Settings", exact: true }).click();
   const box = await page.getByRole("group", { name: "Settings" }).boundingBox();
   expect(box!.x).toBeGreaterThanOrEqual(0);

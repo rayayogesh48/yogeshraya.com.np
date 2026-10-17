@@ -15,7 +15,8 @@ const profileSchema = z.object({
 });
 const experienceSchema = z.array(z.object({
   company: nonempty, role: nonempty, period: nonempty,
-  location: nonempty.optional(), contributions: z.array(nonempty).min(1),
+  location: nonempty.optional(), logo: z.string().startsWith("/").optional(), summary: nonempty.optional(),
+  contributions: z.array(nonempty).min(1),
   caseStudySlug: nonempty.optional(),
 }));
 
@@ -37,6 +38,9 @@ for (const study of catalog.work) {
   }
 }
 for (const role of experiences) {
+  if (role.logo && !fs.existsSync(path.join(process.cwd(), "public", role.logo))) {
+    throw new Error(`Experience ${role.company} references missing logo ${role.logo}`);
+  }
   if (role.caseStudySlug && !publishedWork.has(role.caseStudySlug)) {
     throw new Error(`Experience ${role.company} references unpublished or missing work: ${role.caseStudySlug}`);
   }

@@ -204,26 +204,3 @@ export function NepalFlagIcon({ size = 16 }: IconProps) {
     </svg>
   );
 }
-
-/** A small coloured square with initials, used for companies and products without a logo file. */
-export function Mark({
-  label,
-  color,
-  size = 20,
-  radius = 5,
-}: {
-  label: string;
-  color: string;
-  size?: number;
-  radius?: number;
-}) {
-  return (
-    <span
-      className="mark"
-      style={{ width: size, height: size, borderRadius: radius, background: color, fontSize: size * 0.42 }}
-      aria-hidden="true"
-    >
-      {label}
-    </span>
-  );
-}

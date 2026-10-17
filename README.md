@@ -34,6 +34,8 @@ Article content.
 
 ## Deployment and discovery
 
+Optionally set `GOOGLE_SITE_VERIFICATION` to the token from Google Search Console's HTML-tag method (not needed when the domain is verified through DNS). After launch, submit `/sitemap.xml` in Search Console.
+
 Set `NEXT_PUBLIC_SITE_URL` to the real HTTPS origin before a Vercel production build. Production builds fail if it is missing or invalid. Local and preview builds remain non-indexable. A configured origin can still provide canonical URLs in preview while those pages stay noindex.
 
 Optional content is omitted or presented honestly: no invented email, resume link, portrait, visitor total, personal preferences, or Craft artwork. The initials avatar can be replaced through `aboutData.portrait`. A visitor counter should only be added when a real site-wide measurement source exists.

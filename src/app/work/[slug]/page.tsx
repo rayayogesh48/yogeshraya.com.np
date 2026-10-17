@@ -11,7 +11,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props) {
   const study = getPublishedWork((await params).slug);
   if (!study) notFound();
-  return pageMetadata(study.title, study.summary, `/work/${study.slug}`);
+  return pageMetadata(study.title, study.description ?? study.summary, `/work/${study.slug}`);
 }
 export default async function Page({ params }: Props) {
   const study = getPublishedWork((await params).slug);

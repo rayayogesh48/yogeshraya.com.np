@@ -3,6 +3,8 @@ title: "Real-Time Collaborative Document Canvas"
 role: "Product Designer"
 timeline: "Interaction Architecture"
 summary: "Distributed team members experienced confusing interface states, blocking saving spinners, and lost edits during concurrent collaborative sessions."
+description: "UX case study: clear presence, saving, and conflict states for a real-time collaborative document canvas, so teams stop losing edits."
+updated: "2026-09-24"
 tags:
   - "Collaborative UX"
   - "State Feedback"

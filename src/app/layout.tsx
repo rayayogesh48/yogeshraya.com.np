@@ -31,7 +31,8 @@ export const metadata: Metadata = {
   },
   description: siteDescription,
   robots: { index: isPublicSite, follow: isPublicSite },
-  icons: { icon: "/icon.svg" },
+  // Search Console's HTML-tag verification; not needed when the domain is verified through DNS.
+  ...(process.env.GOOGLE_SITE_VERIFICATION ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } } : {}),
 };
 
 // Entrance animations start hidden; without JavaScript they would never play, so show everything.

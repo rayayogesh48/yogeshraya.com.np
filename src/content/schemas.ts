@@ -18,6 +18,10 @@ const status = z.enum(["draft", "published"]);
 export const workSchema = z.object({
   title: nonempty,
   summary: nonempty,
+  /** Search-result description (about 150 characters); falls back to `summary`. */
+  description: nonempty.max(170, "Keep search descriptions under 170 characters").optional(),
+  /** Last meaningful edit, for the sitemap and structured data. */
+  updated: date.optional(),
   role: nonempty,
   timeline: nonempty.optional(),
   tags: z.array(nonempty),
