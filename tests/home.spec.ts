@@ -23,18 +23,18 @@ test.describe("home page", () => {
   });
 
   test("project carousels slide by button, dot, and keyboard and link to case studies", async ({ page }) => {
-    const card = page.locator(".project-card").first();
+    const card = page.locator(".project-card").filter({ hasText: "Briz" });
     const carousel = card.getByRole("region", { name: /images$/ });
-    await expect(carousel.getByRole("button", { name: "Slide 1 of 3" })).toHaveAttribute("aria-current", "true");
+    await expect(carousel.getByRole("button", { name: "Slide 1 of 2" })).toHaveAttribute("aria-current", "true");
     await carousel.getByRole("button", { name: "Next slide" }).click();
-    await expect(carousel.getByRole("button", { name: "Slide 2 of 3" })).toHaveAttribute("aria-current", "true");
-    await carousel.getByRole("button", { name: "Slide 3 of 3" }).click();
-    await expect(carousel.getByRole("button", { name: "Slide 3 of 3" })).toHaveAttribute("aria-current", "true");
+    await expect(carousel.getByRole("button", { name: "Slide 2 of 2" })).toHaveAttribute("aria-current", "true");
+    await carousel.getByRole("button", { name: "Slide 1 of 2" }).click();
+    await expect(carousel.getByRole("button", { name: "Slide 1 of 2" })).toHaveAttribute("aria-current", "true");
     await carousel.focus();
-    await page.keyboard.press("ArrowRight");
-    await expect(carousel.getByRole("button", { name: "Slide 1 of 3" })).toHaveAttribute("aria-current", "true");
+    await page.keyboard.press("ArrowLeft");
+    await expect(carousel.getByRole("button", { name: "Slide 2 of 2" })).toHaveAttribute("aria-current", "true");
     await card.locator(".project-meta").click();
-    await expect(page).toHaveURL(/\/work\/property-management-dashboard$/, { timeout: NAVIGATION_TIMEOUT });
+    await expect(page).toHaveURL(/\/work\/briz-mobile-workflow$/, { timeout: NAVIGATION_TIMEOUT });
   });
 
   test("single-image projects hide carousel controls", async ({ page }) => {

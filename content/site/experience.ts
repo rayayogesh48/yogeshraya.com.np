@@ -39,7 +39,7 @@ export const experiences: ExperienceItem[] = [
       "Designed clear and engaging interfaces for web and mobile.",
       "Collaborated with developers to ensure smooth design handoff.",
     ],
-    caseStudySlug: "briz-mobile-workflow",
+    caseStudySlug: "bookkeeping-app-redesign-small-business",
   },
   {
     company: "InternSathi",

@@ -34,6 +34,8 @@ Article content.
 
 ## Deployment and discovery
 
+Immersive reader read-aloud uses Gemini text-to-speech through `/api/speech`. Set `GEMINI_API_KEY` (server-only, from Google AI Studio) in `.env.local` and in Vercel; without it the reader has no Listen button. `GEMINI_TTS_MODEL` overrides the model (default `gemini-3.8-flash-tts`). Voices and their delivery styles live in `src/config/speech-voices.ts`. Each paragraph-and-voice clip is cached by URL for a year, so it is generated (and billed) once.
+
 Google Analytics (GA4, `G-EBNBQG6GZ8`) loads only on the Vercel production site; set `NEXT_PUBLIC_GA_MEASUREMENT_ID` to use a different property.
 
 Optionally set `GOOGLE_SITE_VERIFICATION` to the token from Google Search Console's HTML-tag method (not needed when the domain is verified through DNS). After launch, submit `/sitemap.xml` in Search Console.

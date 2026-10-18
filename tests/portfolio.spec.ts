@@ -10,7 +10,7 @@ const publicRoutes = [
   "/about",
   "/craft",
   "/insight",
-  "/work/property-management-dashboard",
+  "/work/bookkeeping-app-redesign-small-business",
   "/work/briz-mobile-workflow",
   "/work/sync-engine-crdt",
   "/insight/designing-clearer-product-flows",
@@ -213,7 +213,7 @@ test("reduced motion and mobile settings preserve usable controls", async ({
 });
 
 test("case studies list published related insights in frontmatter order", async ({ page }) => {
-  await page.goto("/work/property-management-dashboard");
+  await page.goto("/work/bookkeeping-app-redesign-small-business");
   const related = page.getByRole("region", { name: "Related insights" });
   await expect(related.getByRole("heading", { level: 3 })).toHaveText([
     "What should a product dashboard show first?",
@@ -229,16 +229,59 @@ test("case studies list published related insights in frontmatter order", async 
   await page.goto("/work/sync-engine-crdt");
   await expect(page.getByRole("region", { name: "Related insights" })).toHaveCount(0);
 
-  await page.goto("/work/property-management-dashboard");
+  await page.goto("/work/bookkeeping-app-redesign-small-business");
   await page.getByRole("region", { name: "Related insights" }).getByRole("link").first().click();
   await expect(page).toHaveURL(/\/insight\/what-should-a-dashboard-show-first$/, { timeout: NAVIGATION_TIMEOUT });
   await expect(page.getByRole("link", { name: "Back to Insights" }).first()).toBeVisible();
 });
 
-test("old /blog URLs permanently redirect to /insight", async ({ request }) => {
-  for (const [from, to] of [["/blog", "/insight"], ["/blog/designing-clearer-product-flows", "/insight/designing-clearer-product-flows"]]) {
+test("old URLs permanently redirect to their new pages", async ({ request }) => {
+  for (const [from, to] of [
+    ["/blog", "/insight"],
+    ["/blog/designing-clearer-product-flows", "/insight/designing-clearer-product-flows"],
+    ["/work/property-management-dashboard", "/work/bookkeeping-app-redesign-small-business"],
+  ]) {
     const response = await request.get(from, { maxRedirects: 0 });
     expect(response.status(), from).toBe(308);
     expect(response.headers().location, from).toBe(to);
   }
+});
+
+// The immersive reader is hidden for now (src/config/features.ts); re-enable these with it.
+test.skip("immersive reader opens from the button or R, keeps focus inside, and remembers settings", async ({ page }) => {
+  await page.goto("/insight/designing-clearer-product-flows");
+  const trigger = page.getByRole("button", { name: /Immersive reader/ });
+  await trigger.click();
+  const reader = page.getByRole("dialog", { name: /Immersive reader/ });
+  await expect(reader).toBeVisible();
+  await expect(reader.getByRole("heading", { level: 1 })).toHaveText("Designing clearer product flows");
+  await expect(page.getByRole("button", { name: "Close immersive reader" })).toBeFocused();
+
+  await reader.getByRole("button", { name: "Display" }).click();
+  await reader.getByRole("group", { name: "Page" }).getByRole("button", { name: "Paper" }).click();
+  await expect(reader).toHaveAttribute("data-page", "paper");
+  await page.keyboard.press("Escape");
+  await expect(reader.locator("#reader-settings")).toHaveCount(0);
+  await expect(reader).toBeVisible();
+
+  await page.keyboard.press("Escape");
+  await expect(reader).toHaveCount(0);
+  await expect(trigger).toBeFocused();
+
+  await page.reload();
+  await page.keyboard.press("r");
+  await expect(page.getByRole("dialog", { name: /Immersive reader/ })).toHaveAttribute("data-page", "paper");
+});
+
+// The immersive reader is hidden for now (src/config/features.ts); re-enable these with it.
+test.skip("first visit introduces the immersive reader once", async ({ page }) => {
+  await page.goto("/work/bookkeeping-app-redesign-small-business");
+  const intro = page.locator(".reader-intro");
+  await expect(intro).toBeVisible();
+  await expect(page.getByRole("button", { name: /Immersive reader/ })).toHaveAttribute("data-intro", "on");
+  await page.getByRole("button", { name: "Got it" }).click();
+  await expect(intro).toHaveCount(0);
+  await page.goto("/insight/designing-clearer-product-flows");
+  await page.waitForTimeout(1500);
+  await expect(intro).toHaveCount(0);
 });
