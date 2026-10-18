@@ -15,14 +15,12 @@ import { themeInitScript } from "@/components/theme/theme-init";
 import { isPublicSite, siteDescription, siteName, siteUrl } from "@/config/site";
 import { aboutData } from "@site/profile";
 
-const interTight = Inter_Tight({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-inter-tight",
-  display: "swap",
-});
-const jetbrains = JetBrains_Mono({ subsets: ["latin"], weight: ["500"], variable: "--font-jetbrains", display: "swap" });
-const mukta = Mukta({ subsets: ["devanagari"], weight: ["500", "700"], variable: "--font-mukta", display: "swap" });
+// One variable font file covers every weight the site uses (400–800), instead of five separate files.
+const interTight = Inter_Tight({ subsets: ["latin"], variable: "--font-inter-tight", display: "swap" });
+// Small labels and the Nepali name (shown only after tapping the avatar) aren't needed for the first paint,
+// so these load when used instead of being preloaded.
+const jetbrains = JetBrains_Mono({ subsets: ["latin"], weight: ["500"], variable: "--font-jetbrains", display: "swap", preload: false });
+const mukta = Mukta({ subsets: ["devanagari"], weight: ["500", "700"], variable: "--font-mukta", display: "swap", preload: false });
 
 export const metadata: Metadata = {
   ...(siteUrl ? { metadataBase: new URL(siteUrl) } : {}),

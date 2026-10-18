@@ -2,6 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  experimental: {
+    // Put the (small, ~12 KiB) stylesheet inside the HTML so the first paint doesn't wait on a separate request.
+    inlineCss: true,
+  },
   // Keep a running development server from overwriting production build files.
   distDir: process.env.NODE_ENV === "development" ? ".next-dev" : ".next",
   // Articles moved from /blog to /insight; keep old links and search results working.

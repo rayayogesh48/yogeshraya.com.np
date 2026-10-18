@@ -45,9 +45,18 @@ export function useParticleCanvas(createScene: (state: SceneState) => Scene) {
       scene.resize(width, height);
       scene.draw(context, width, height, 0);
     };
-    const resizeObserver = new ResizeObserver(resize);
+    // Building the scene and drawing it is real work on a phone, so wait until the page's own content has painted
+    // and the browser is idle (with a fallback for Safari, which has no requestIdleCallback).
+    let started = false;
+    const resizeObserver = new ResizeObserver(() => started && resize());
     resizeObserver.observe(canvas);
-    resize();
+    const start = () => {
+      started = true;
+      resize();
+      frame = requestAnimationFrame(tick);
+    };
+    const canIdle = typeof window.requestIdleCallback === "function";
+    const idle = canIdle ? window.requestIdleCallback(start, { timeout: 1500 }) : setTimeout(start, 300);
 
     const visibility = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
@@ -56,7 +65,7 @@ export function useParticleCanvas(createScene: (state: SceneState) => Scene) {
 
     const recolor = () => {
       state.rgb = particleColor(canvas);
-      if (prefersReducedMotion()) scene.draw(context, width, height, 0);
+      if (started && prefersReducedMotion()) scene.draw(context, width, height, 0);
     };
     const themeObserver = new MutationObserver(recolor);
     themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
@@ -78,13 +87,15 @@ export function useParticleCanvas(createScene: (state: SceneState) => Scene) {
     canvas.addEventListener("pointerleave", leave);
     canvas.addEventListener("pointerdown", press);
 
-    const tick = (time: number) => {
-      if (visible && !prefersReducedMotion()) scene.draw(context, width, height, time / 1000);
+    const draw = context;
+    function tick(time: number) {
+      if (visible && !prefersReducedMotion()) scene.draw(draw, width, height, time / 1000);
       frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
+    }
 
     return () => {
+      if (canIdle) window.cancelIdleCallback(idle as number);
+      else clearTimeout(idle);
       cancelAnimationFrame(frame);
       resizeObserver.disconnect();
       visibility.disconnect();

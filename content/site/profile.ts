@@ -21,6 +21,8 @@ export interface AboutData {
   email: string;
   resume?: string;
   portrait?: string;
+  /** Right-sized copies of the portrait for the hero avatar (`srcset` widths); the full portrait stays for sharing. */
+  portraitSizes?: { src: string; width: number }[];
   socials: {
     github?: string;
     twitter?: string;
@@ -33,6 +35,11 @@ export const aboutData: AboutData = {
   nativeName: "योगेश",
   country: "Nepal",
   portrait: "/images/profile.webp",
+  portraitSizes: [
+    { src: "/images/profile-92.webp", width: 92 },
+    { src: "/images/profile-184.webp", width: 184 },
+    { src: "/images/profile-276.webp", width: 276 },
+  ],
   timeZone: "Asia/Kathmandu",
   company: { name: "Bytecare Technology", logo: "/images/logo/bytecare-logo.webp", href: "https://www.bytecaretech.com/" },
   products: [

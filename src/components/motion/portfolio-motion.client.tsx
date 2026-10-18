@@ -11,9 +11,11 @@ export function PortfolioMotion({ children }: { children: ReactNode }) {
 
 type RevealTag = "div" | "p" | "span" | "nav" | "footer" | "section" | "ul" | "header";
 
-const shown = { opacity: 1, y: 0, filter: "blur(0px)" };
+// Entrances animate only opacity and transform: the GPU can run those on its own, whereas animating blur
+// repaints every frame and stutters on phones.
+const shown = { opacity: 1, y: 0 };
 
-/** Fades and un-blurs its children upward, on mount or when scrolled into view. */
+/** Fades its children in and up, on mount or when scrolled into view. */
 export function Reveal({
   children,
   className,
@@ -33,7 +35,7 @@ export function Reveal({
   return (
     <Tag
       className={className}
-      initial={{ opacity: 0, y, filter: "blur(6px)" }}
+      initial={{ opacity: 0, y }}
       {...(onMount ? { animate: shown } : { whileInView: shown, viewport: { once: true, amount: 0.2 } })}
       transition={{ duration: 0.7, delay, ease: EASE }}
     >
@@ -47,11 +49,11 @@ const wordContainer = (delay: number): Variants => ({
   show: { transition: { staggerChildren: 0.06, delayChildren: delay } },
 });
 const word: Variants = {
-  hidden: { opacity: 0, y: "0.35em", filter: "blur(8px)" },
-  show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.6, ease: EASE } },
+  hidden: { opacity: 0, y: "0.35em" },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
 };
 
-/** A heading whose words blur in one after another. */
+/** A heading whose words rise in one after another. */
 export function WordReveal({
   text,
   as = "h2",
@@ -114,6 +116,6 @@ export function Stagger({
 }
 
 export const staggerItem: Variants = {
-  hidden: { opacity: 0, y: 16, filter: "blur(6px)" },
-  show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.6, ease: EASE } },
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
 };

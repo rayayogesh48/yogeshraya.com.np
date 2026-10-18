@@ -22,7 +22,7 @@ const experienceSchema = z.array(z.object({
 
 const catalog = validateCatalog();
 profileSchema.parse(aboutData);
-for (const asset of [aboutData.portrait, aboutData.resume].filter((value): value is string => Boolean(value))) {
+for (const asset of [aboutData.portrait, aboutData.resume, ...(aboutData.portraitSizes ?? []).map((size) => size.src)].filter((value): value is string => Boolean(value))) {
   if (!fs.existsSync(path.join(process.cwd(), "public", asset))) throw new Error(`Profile references missing asset ${asset}`);
 }
 z.array(z.object({ title: nonempty, description: nonempty })).parse(strengths);

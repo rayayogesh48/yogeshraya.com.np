@@ -2,12 +2,18 @@
 
 import Link from "next/link";
 import { AnimatePresence, motion, useScroll, useTransform } from "motion/react";
-import { useState, type ReactNode } from "react";
+import { useState, type CSSProperties, type ReactNode } from "react";
 import { aboutData, type InlineMark } from "@site/profile";
-import { EASE, Reveal } from "@/components/motion/portfolio-motion.client";
+import { EASE } from "@/components/motion/portfolio-motion.client";
 import { RangeField } from "@/components/visual/range-field.client";
 import { useToast } from "@/components/site/toast.client";
 import { ArrowUpRightIcon, DownloadIcon, NepalFlagIcon } from "@/components/ui/icons";
+
+/**
+ * The hero fades in with a CSS animation rather than Motion, so it plays from the first paint without waiting for
+ * JavaScript. The bio is the page's Largest Contentful Paint, so delays stay short.
+ */
+const heroDelay = (seconds: number) => ({ "--hero-delay": `${seconds}s` }) as CSSProperties;
 
 function InlineLink({ item }: { item: InlineMark }) {
   const content: ReactNode = (
@@ -46,12 +52,12 @@ export function Hero() {
   const { scrollY } = useScroll();
   const bannerY = useTransform(scrollY, [0, 400], [0, 60]);
   const bannerOpacity = useTransform(scrollY, [0, 400], [1, 0.4]);
-  const { name, nativeName, role, country, company, products, studio, portrait, resume } = aboutData;
+  const { name, nativeName, role, country, company, products, studio, portrait, portraitSizes, resume } = aboutData;
   const [firstName, ...otherNames] = name.split(" ");
 
   return (
     <section className="hero" id="top" data-dock="home" aria-labelledby="profile-name">
-      <Reveal onMount className="banner-wrap">
+      <div className="banner-wrap hero-in">
         <motion.div className="banner" style={{ y: bannerY, opacity: bannerOpacity }}>
           <RangeField />
         </motion.div>
@@ -65,15 +71,26 @@ export function Hero() {
           whileTap={{ scale: 0.94 }}
           transition={{ type: "spring", stiffness: 400, damping: 22 }}
         >
-          {portrait ? <img src={portrait} alt="" /> : <span className="avatar-mono">{firstName[0]}</span>}
+          {portrait ? (
+            <img
+              src={portraitSizes?.[0]?.src ?? portrait}
+              srcSet={portraitSizes?.map((size) => `${size.src} ${size.width}w`).join(", ")}
+              sizes="(max-width: 640px) 72px, 92px"
+              alt=""
+              width={92}
+              height={92}
+            />
+          ) : (
+            <span className="avatar-mono">{firstName[0]}</span>
+          )}
         </motion.button>
-      </Reveal>
+      </div>
 
       <div className="hero-text">
         <h1 className="hero-name" id="profile-name">
-          <Reveal onMount delay={0.1} as="span" className="name-part">
+          <span className="name-part hero-in" style={heroDelay(0.04)}>
             {firstName}
-          </Reveal>
+          </span>
           <AnimatePresence initial={false}>
             {showNative && nativeName && (
               <motion.span
@@ -90,16 +107,16 @@ export function Hero() {
             )}
           </AnimatePresence>
           {otherNames.length > 0 && (
-            <Reveal onMount delay={0.15} as="span" className="name-part">
+            <span className="name-part hero-in" style={heroDelay(0.06)}>
               {" "}
               {otherNames.join(" ")}
-            </Reveal>
+            </span>
           )}
         </h1>
-        <Reveal onMount delay={0.18} as="p" className="hero-subtitle">
+        <p className="hero-subtitle hero-in" style={heroDelay(0.06)}>
           {role}
-        </Reveal>
-        <Reveal onMount delay={0.26} as="p" className="hero-bio">
+        </p>
+        <p className="hero-bio hero-in" style={heroDelay(0.08)}>
           Hey, I&apos;m {firstName}, a {role} based in{" "}
           <span className="hero-inline-tag">
             <span className="hero-icon">
@@ -121,17 +138,17 @@ export function Hero() {
             </>
           )}
           .
-        </Reveal>
+        </p>
         {email && (
-          <Reveal onMount delay={0.34} className="hero-hint">
+          <div className="hero-hint hero-in" style={heroDelay(0.12)}>
             Press{" "}
             <button type="button" onClick={copyEmail} aria-label="Copy email" aria-keyshortcuts="m">
               <kbd>M</kbd>
             </button>{" "}
             to copy my email
-          </Reveal>
+          </div>
         )}
-        <Reveal onMount delay={0.4} className="hero-ctas">
+        <div className="hero-ctas hero-in" style={heroDelay(0.14)}>
           <a
             className="chip"
             href="#work"
@@ -149,7 +166,7 @@ export function Hero() {
               <DownloadIcon size={13} />
             </a>
           )}
-        </Reveal>
+        </div>
       </div>
     </section>
   );

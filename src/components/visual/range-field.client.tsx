@@ -8,7 +8,8 @@ import { useParticleCanvas, type Rgb, type Scene, type SceneState } from "./part
  * names the nearest high peak, and a click sends a gust of wind rolling through the ridges.
  */
 
-const GAP = 5;
+/** Dot spacing in CSS pixels; phones get a coarser grid (about 30% fewer dots) to keep each frame cheap. */
+const gapFor = (width: number) => (width < 480 ? 6 : 5);
 const ALPHA_STEPS = 12;
 const GUST_SECONDS = 2.6;
 const LAMP_RADIUS = 80;
@@ -129,6 +130,7 @@ export function createRangeScene(state: SceneState): Scene {
 
   return {
     resize(width, height) {
+      const GAP = gapFor(width);
       const cols = Math.ceil(width / GAP);
       const rows = Math.ceil(height / GAP);
       const ridges = Array.from({ length: 4 }, (_, layer) =>
