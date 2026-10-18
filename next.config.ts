@@ -18,6 +18,8 @@ const nextConfig: NextConfig = {
       // The property management case study was replaced by the Karobar case study; keep indexed links working.
       { source: "/work/property-management-dashboard", destination: "/work/karobar-app-product-design", permanent: true },
       { source: "/work/bookkeeping-app-redesign-small-business", destination: "/work/karobar-app-product-design", permanent: true },
+      // Briz moved to a marketplace-focused slug; keep indexed links working.
+      { source: "/work/briz-mobile-workflow", destination: "/work/briz-local-marketplace-app-nepal", permanent: true },
     ];
   },
 };

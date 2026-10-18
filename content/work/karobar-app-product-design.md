@@ -14,9 +14,9 @@ tags:
   - "Mobile & Web App Design"
 cover:
   src: "/images/case-studies/karobar-redesign.webp"
-  alt: "Karobar app screens showing the business dashboard, financial insights, and transaction management interface."
-  width: 1672
-  height: 940
+  alt: "Karobar app logo on a dark green gradient."
+  width: 2000
+  height: 1050
 gallery: null
 featuredOrder: 1
 relatedInsights:

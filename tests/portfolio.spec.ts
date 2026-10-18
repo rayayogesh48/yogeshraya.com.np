@@ -11,7 +11,7 @@ const publicRoutes = [
   "/craft",
   "/insight",
   "/work/karobar-app-product-design",
-  "/work/briz-mobile-workflow",
+  "/work/briz-local-marketplace-app-nepal",
   "/work/sync-engine-crdt",
   "/insight/designing-clearer-product-flows",
   "/insight/what-should-a-dashboard-show-first",
@@ -222,7 +222,7 @@ test("case studies list published related insights in frontmatter order", async 
   await expect(related.getByRole("link").first()).toHaveAttribute("href", "/insight/what-should-a-dashboard-show-first");
 
   // A referenced draft stays hidden; the published reference still shows.
-  await page.goto("/work/briz-mobile-workflow");
+  await page.goto("/work/briz-local-marketplace-app-nepal");
   await expect(page.getByRole("region", { name: "Related insights" }).getByRole("link")).toHaveCount(1);
 
   // No references: no section.
@@ -241,6 +241,7 @@ test("old URLs permanently redirect to their new pages", async ({ request }) => 
     ["/blog/designing-clearer-product-flows", "/insight/designing-clearer-product-flows"],
     ["/work/property-management-dashboard", "/work/karobar-app-product-design"],
     ["/work/bookkeeping-app-redesign-small-business", "/work/karobar-app-product-design"],
+    ["/work/briz-mobile-workflow", "/work/briz-local-marketplace-app-nepal"],
   ]) {
     const response = await request.get(from, { maxRedirects: 0 });
     expect(response.status(), from).toBe(308);

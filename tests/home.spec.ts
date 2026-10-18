@@ -22,7 +22,8 @@ test.describe("home page", () => {
     await expect.poll(() => page.evaluate(() => document.getElementById("work")!.getBoundingClientRect().top)).toBeLessThan(100);
   });
 
-  test("project carousels slide by button, dot, and keyboard and link to case studies", async ({ page }) => {
+  // No published project has an image gallery yet; re-enable when one does.
+  test.skip("project carousels slide by button, dot, and keyboard and link to case studies", async ({ page }) => {
     const card = page.locator(".project-card").filter({ hasText: "Briz" });
     const carousel = card.getByRole("region", { name: /images$/ });
     await expect(carousel.getByRole("button", { name: "Slide 1 of 2" })).toHaveAttribute("aria-current", "true");
@@ -34,7 +35,7 @@ test.describe("home page", () => {
     await page.keyboard.press("ArrowLeft");
     await expect(carousel.getByRole("button", { name: "Slide 2 of 2" })).toHaveAttribute("aria-current", "true");
     await card.locator(".project-meta").click();
-    await expect(page).toHaveURL(/\/work\/briz-mobile-workflow$/, { timeout: NAVIGATION_TIMEOUT });
+    await expect(page).toHaveURL(/\/work\/briz-local-marketplace-app-nepal$/, { timeout: NAVIGATION_TIMEOUT });
   });
 
   test("single-image projects hide carousel controls", async ({ page }) => {
