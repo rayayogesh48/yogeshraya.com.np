@@ -19,7 +19,7 @@ gallery: null
 featuredOrder: 3
 relatedInsights: null
 kind: "case-study"
-status: "published"
+status: "draft"
 ---
 
 # Real-Time Collaborative Document Canvas

@@ -8,11 +8,9 @@ const publicRoutes = [
   "/",
   "/work",
   "/about",
-  "/craft",
   "/insight",
   "/work/karobar-app-product-design",
   "/work/briz-local-marketplace-app-nepal",
-  "/work/sync-engine-crdt",
   "/insight/designing-clearer-product-flows",
   "/insight/what-should-a-dashboard-show-first",
 ];
@@ -115,7 +113,8 @@ test("disclosures expose content by keyboard and dock navigates between pages", 
   ).toBeVisible();
   const nav = page.getByRole("navigation", { name: "Main navigation" });
   await page.goto("/insight");
-  for (const label of ["Projects", "About", "Craft", "Insights"]) {
+  // Craft is hidden for now (src/config/features.ts); add it back here with the section.
+  for (const label of ["Projects", "About", "Insights"]) {
     await nav.getByRole("link", { name: label, exact: true }).click();
     await expect(
       nav.getByRole("link", { name: label, exact: true }),
@@ -141,7 +140,6 @@ for (const theme of ["Light", "Dark"]) {
       "/",
       "/about",
       "/work",
-      "/craft",
       "/insight/designing-clearer-product-flows",
     ]) {
       await page.goto(route);
@@ -158,6 +156,9 @@ test("drafts and unknown content return 404 and stay out of discovery", async ({
     "/insight/missing",
     "/work/missing",
     "/craft/missing",
+    // Craft is hidden for now (src/config/features.ts).
+    "/craft",
+    "/craft/chat-support-ui",
   ]) {
     expect((await request.get(route)).status(), route).toBe(404);
   }
@@ -224,10 +225,6 @@ test("case studies list published related insights in frontmatter order", async 
   // A referenced draft stays hidden; the published reference still shows.
   await page.goto("/work/briz-local-marketplace-app-nepal");
   await expect(page.getByRole("region", { name: "Related insights" }).getByRole("link")).toHaveCount(1);
-
-  // No references: no section.
-  await page.goto("/work/sync-engine-crdt");
-  await expect(page.getByRole("region", { name: "Related insights" })).toHaveCount(0);
 
   await page.goto("/work/karobar-app-product-design");
   await page.getByRole("region", { name: "Related insights" }).getByRole("link").first().click();

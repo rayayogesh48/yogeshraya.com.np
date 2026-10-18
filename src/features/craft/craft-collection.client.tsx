@@ -3,18 +3,14 @@
 import Link from "next/link";
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ArrowUpRight, Shapes } from "lucide-react";
+import { Shapes } from "lucide-react";
 import type { CraftSummary } from "@/content/types";
 
-export function CraftCollection({
-  items,
-  preview = false,
-}: {
-  items: CraftSummary[];
-  preview?: boolean;
-}) {
+const PAGE_SIZE = 12;
+
+export function CraftCollection({ items }: { items: CraftSummary[] }) {
   const [category, setCategory] = useState("All");
-  const [limit, setLimit] = useState(6);
+  const [limit, setLimit] = useState(PAGE_SIZE);
   const reduced = useReducedMotion();
   const categories = [
     "All",
@@ -23,7 +19,7 @@ export function CraftCollection({
   const filtered = items.filter(
     (item) => category === "All" || item.category === category,
   );
-  const visible = filtered.slice(0, preview ? 4 : limit);
+  const visible = filtered.slice(0, limit);
   if (!items.length)
     return (
       <div className="craft-empty">
@@ -40,80 +36,78 @@ export function CraftCollection({
     );
   return (
     <>
-      {!preview && (
-        <div className="craft-filters" aria-label="Filter craft by category">
-          {categories.map((name) => (
-            <button
-              type="button"
-              key={name}
-              aria-pressed={category === name}
-              onClick={() => {
-                setCategory(name);
-                setLimit(6);
-              }}
-            >
-              {name}
-              <span>
-                {name === "All"
-                  ? items.length
-                  : items.filter((item) => item.category === name).length}
-              </span>
-            </button>
-          ))}
-        </div>
-      )}
+      <div className="craft-filters" aria-label="Filter craft by category">
+        {categories.map((name) => (
+          <button
+            type="button"
+            key={name}
+            aria-pressed={category === name}
+            onClick={() => {
+              setCategory(name);
+              setLimit(PAGE_SIZE);
+            }}
+          >
+            {category === name && (
+              <motion.span
+                layoutId="craft-filter-thumb"
+                className="craft-filter-thumb"
+                aria-hidden="true"
+                transition={reduced ? { duration: 0 } : { type: "spring", duration: 0.35, bounce: 0.15 }}
+              />
+            )}
+            <span className="craft-filter-label">{name}</span>
+            <span className="craft-filter-count">
+              {name === "All"
+                ? items.length
+                : items.filter((item) => item.category === name).length}
+            </span>
+          </button>
+        ))}
+      </div>
+      {/* Masonry: each tile keeps its image's own shape, so tall and wide pieces sit together. */}
       <div className="craft-grid">
-        <AnimatePresence initial={false} mode="popLayout">
+        <AnimatePresence initial={false}>
           {visible.map((item) => (
             <motion.article
-              layout={!reduced}
               key={item.slug}
+              className="craft-tile"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: reduced ? 0 : 0.18 }}
             >
               <Link href={`/craft/${item.slug}`} className="craft-card">
-                <img
-                  src={item.image.src}
-                  alt={item.image.alt}
-                  width={600}
-                  height={450}
-                  loading="lazy"
-                />
-                <div>
-                  <h3>{item.title}</h3>
-                  <ArrowUpRight size={16} aria-hidden="true" />
+                <div className="craft-card-media">
+                  <img
+                    src={item.image.src}
+                    alt={item.image.alt}
+                    width={item.image.width}
+                    height={item.image.height}
+                    loading="lazy"
+                  />
                 </div>
-                <p className="small muted">
-                  {item.category}
-                  {item.date && (
-                    <>
-                      {" "}
-                      · <time dateTime={item.date}>{item.date}</time>
-                    </>
-                  )}
-                </p>
+                <div className="craft-card-caption">
+                  <h3>{item.title}</h3>
+                  <span>{item.category}</span>
+                </div>
               </Link>
             </motion.article>
           ))}
         </AnimatePresence>
       </div>
-      {!preview && visible.length < filtered.length && (
+      {visible.length < filtered.length && (
         <button
           type="button"
           className="button secondary load-more"
-          onClick={() => setLimit((value) => value + 6)}
+          onClick={() => setLimit((value) => value + PAGE_SIZE)}
         >
           Load More
           <span className="muted">({filtered.length - visible.length})</span>
         </button>
       )}
-      {!preview && (
-        <p className="sr-only" role="status">
-          Showing {visible.length} of {filtered.length} pieces in {category}.
-        </p>
-      )}
+      <p className="sr-only" role="status">
+        Showing {visible.length} of {filtered.length} pieces in {category}.
+      </p>
     </>
   );
 }

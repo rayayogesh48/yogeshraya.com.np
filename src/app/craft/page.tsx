@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+import { craftEnabled } from "@/config/features";
 import { listPublishedCraft } from "@/content/server";
 import { CraftPageContent } from "@/features/craft/craft-page";
 import { pageMetadata } from "@/lib/seo";
@@ -8,5 +10,6 @@ export const metadata = pageMetadata(
   "/craft",
 );
 export default function Page() {
+  if (!craftEnabled) notFound();
   return <CraftPageContent items={listPublishedCraft()} />;
 }

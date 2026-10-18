@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { listBlog, listCraft, listWork } from "@/content/catalog";
+import { craftEnabled } from "@/config/features";
 import { isPublicSite, siteUrl } from "@/config/site";
 import { insightPath, insightsPath } from "@/config/routes";
 
@@ -33,7 +34,7 @@ function page(path: string, updated?: string, images: (string | undefined)[] = [
 export default function sitemap(): MetadataRoute.Sitemap {
   if (!isPublicSite) return [];
   const work = listWork();
-  const craft = listCraft();
+  const craft = craftEnabled ? listCraft() : [];
   const posts = listBlog();
   const workUpdated = latest(work.map((study) => study.updated));
   const craftUpdated = latest(craft.map((item) => item.date));
@@ -44,7 +45,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page("", latest([workUpdated, postsUpdated])),
     page("/work", workUpdated, work.map((study) => study.cover?.src ?? study.gallery?.[0]?.src)),
     page("/about"),
-    page("/craft", craftUpdated, craft.map((item) => item.image.src)),
+    ...(craftEnabled ? [page("/craft", craftUpdated, craft.map((item) => item.image.src))] : []),
     page(insightsPath, postsUpdated),
     ...work.map((study) =>
       page(`/work/${study.slug}`, study.updated, [study.cover?.src, ...(study.gallery ?? []).map((image) => image.src), ...bodyImages(study.content)]),

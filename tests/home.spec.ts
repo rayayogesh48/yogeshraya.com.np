@@ -39,8 +39,8 @@ test.describe("home page", () => {
   });
 
   test("single-image projects hide carousel controls", async ({ page }) => {
-    const card = page.locator(".project-card").filter({ hasText: "Real-Time Collaborative Document Canvas" });
-    await expect(card.locator('img[src="/images/case-studies/sync-engine.svg"]')).toBeVisible();
+    const card = page.locator(".project-card").filter({ hasText: "Designing the Karobar App" });
+    await expect(card.locator('img[src="/images/case-studies/karobar-redesign.webp"]')).toBeVisible();
     await expect(card.getByRole("button", { name: "Next slide" })).toHaveCount(0);
   });
 
@@ -54,14 +54,13 @@ test.describe("home page", () => {
     await expect(nav.getByRole("button", { name: "Projects" })).toHaveAttribute("aria-current", "true");
   });
 
-  test("home stays focused on work and insights; About and Craft open their pages", async ({ page }) => {
+  test("home stays focused on work and insights; About opens its page", async ({ page }) => {
     for (const heading of ["Experience", "What I Do Best", "About me", "Craft"]) {
       await expect(page.getByRole("heading", { name: heading, exact: true })).toHaveCount(0);
     }
     const nav = page.getByRole("navigation", { name: "Main navigation" });
-    await nav.getByRole("link", { name: "Craft", exact: true }).click();
-    await expect(page).toHaveURL(/\/craft$/, { timeout: NAVIGATION_TIMEOUT });
-    await page.goto("/");
+    // Craft is hidden for now (src/config/features.ts).
+    await expect(nav.getByRole("link", { name: "Craft", exact: true })).toHaveCount(0);
     await nav.getByRole("link", { name: "About", exact: true }).click();
     await expect(page).toHaveURL(/\/about$/, { timeout: NAVIGATION_TIMEOUT });
   });
