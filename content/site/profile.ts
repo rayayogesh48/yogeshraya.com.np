@@ -81,15 +81,26 @@ export const strengths = [
   },
 ];
 
+/** Companies and products shown in the About page logo strip. Entries without a logo show their initials. */
+export const workedWith: { name: string; logo?: string }[] = [
+  { name: "Overlays Studio", logo: "/images/logo/overlay-logo.webp" },
+  { name: "Karobar", logo: "/images/logo/karobar-logo.webp" },
+  { name: "Bytecare Technology", logo: "/images/logo/bytecare-logo.webp" },
+  { name: "Briz", logo: "/images/logo/briz-logo.webp" },
+  { name: "InternSathi" },
+  { name: "Lanceme Up" },
+  { name: "Brand Builder" },
+  { name: "Binwary" },
+];
+
 export const personal = {
-  languages: ["English", "Nepali"],
   tools: [
-    { name: "Figma", use: "Interface design, prototyping, and handoff" },
-    { name: "Framer", use: "Websites and landing pages, from design to launch" },
-    { name: "Mixpanel", use: "Product analytics and funnels" },
-    { name: "Microsoft Clarity", use: "Session recordings and heatmaps" },
-    { name: "Google Analytics", use: "Traffic and acquisition" },
-  ],
+    { name: "Figma", icon: "figma", use: "Interface design, prototyping, and handoff" },
+    { name: "Framer", icon: "framer", use: "Websites and landing pages, from design to launch" },
+    { name: "Mixpanel", icon: "mixpanel", use: "Product analytics and funnels" },
+    { name: "Microsoft Clarity", icon: "clarity", use: "Session recordings and heatmaps" },
+    { name: "Google Analytics", icon: "googleAnalytics", use: "Traffic and acquisition" },
+  ] as const,
   philosophy:
     "I want people to spend less effort understanding the interface and more time doing what they came to do. Clear flows, useful feedback, and thoughtful details matter because they help people move forward.",
 };

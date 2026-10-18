@@ -27,4 +27,6 @@ The project story goes here.
 
 Blog entries require `title`, `description`, a **quoted** `YYYY-MM-DD` publication `date`, `status`, and a body when published. `cover` and its `coverAlt` are optional together. Craft entries require `title`, `description`, `category` (`Product UI`, `Website Design`, or `Components`), `image` with dimensions and alt text, and `status`; `date` is optional. The six current Craft entries are placeholders to replace with real work. Profile and experience remain typed records in `content/site`.
 
+Testimonials live in `content/testimonials/*.md`: `name`, `company`, `status`, and the quote as the body are required; `role`, `image` (a square photo under `/images/testimonials/`), `companyLogo`, and `order` are optional. Copy `example.md` to start. Files with `sample: true` are placeholders: they show with a "Sample" badge in development and are left out of production builds, so replace them with real testimonials (or delete them) and remove the flag. The home page Testimonials section only appears once at least one testimonial is published, and only real, approved quotes should be published.
+
 Do not place confidential draft artwork under `public/`: those files are directly reachable even when their content route is unpublished.

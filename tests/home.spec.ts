@@ -1,5 +1,8 @@
 import { expect, test } from "@playwright/test";
 
+// Client-side navigation updates the URL once the target page loads; a dev server compiles it on first visit.
+const NAVIGATION_TIMEOUT = 15_000;
+
 test.describe("home page", () => {
   test.beforeEach(async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
@@ -31,7 +34,7 @@ test.describe("home page", () => {
     await page.keyboard.press("ArrowRight");
     await expect(carousel.getByRole("button", { name: "Slide 1 of 3" })).toHaveAttribute("aria-current", "true");
     await card.locator(".project-meta").click();
-    await expect(page).toHaveURL(/\/work\/property-management-dashboard$/);
+    await expect(page).toHaveURL(/\/work\/property-management-dashboard$/, { timeout: NAVIGATION_TIMEOUT });
   });
 
   test("single-image projects hide carousel controls", async ({ page }) => {
@@ -43,14 +46,27 @@ test.describe("home page", () => {
   test("dock follows the scrolled section and scrolls to sections", async ({ page }) => {
     const nav = page.getByRole("navigation", { name: "Main navigation" });
     await expect(nav.getByRole("button", { name: "Home" })).toHaveAttribute("aria-current", "true");
-    await nav.getByRole("button", { name: "Craft" }).click();
-    await expect(nav.getByRole("button", { name: "Craft" })).toHaveAttribute("aria-current", "true");
-    await expect(nav.locator(".dock-item.is-active")).toContainText("Craft");
+    await nav.getByRole("button", { name: "Insights" }).click();
+    await expect(nav.getByRole("button", { name: "Insights" })).toHaveAttribute("aria-current", "true");
+    await expect(nav.locator(".dock-item.is-active")).toContainText("Insights");
     await nav.getByRole("button", { name: "Projects" }).click();
     await expect(nav.getByRole("button", { name: "Projects" })).toHaveAttribute("aria-current", "true");
   });
 
-  test("experience and strengths expand", async ({ page }) => {
+  test("home stays focused on work and insights; About and Craft open their pages", async ({ page }) => {
+    for (const heading of ["Experience", "What I Do Best", "About me", "Craft"]) {
+      await expect(page.getByRole("heading", { name: heading, exact: true })).toHaveCount(0);
+    }
+    const nav = page.getByRole("navigation", { name: "Main navigation" });
+    await nav.getByRole("link", { name: "Craft", exact: true }).click();
+    await expect(page).toHaveURL(/\/craft$/, { timeout: NAVIGATION_TIMEOUT });
+    await page.goto("/");
+    await nav.getByRole("link", { name: "About", exact: true }).click();
+    await expect(page).toHaveURL(/\/about$/, { timeout: NAVIGATION_TIMEOUT });
+  });
+
+  test("experience and strengths expand on the About page", async ({ page }) => {
+    await page.goto("/about");
     const job = page.getByRole("button", { name: /Karobar/ });
     await job.click();
     await expect(job).toHaveAttribute("aria-expanded", "true");
@@ -87,7 +103,7 @@ for (const width of [320, 390, 768]) {
 test("reduced motion keeps all home content visible", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-  for (const heading of ["My Work", "Experience", "What I Do Best", "About me", "Craft", "Insights"]) {
+  for (const heading of ["My Work", "Insights"]) {
     const element = page.getByRole("heading", { name: heading, exact: true });
     await element.scrollIntoViewIfNeeded();
     await expect(element).toBeVisible();

@@ -241,14 +241,14 @@ function DockItem({
 }: {
   href: string;
   onHome: boolean;
-  section: string;
+  section?: string;
   onNavigate: () => void;
   className: string;
   current: boolean;
   label: string;
   children: ReactNode;
 }) {
-  if (onHome) {
+  if (onHome && section) {
     return (
       <button
         type="button"
@@ -332,7 +332,7 @@ export function Dock({ contactHref }: { contactHref: string }) {
                     className={`dock-item ${active ? "is-active" : ""}`}
                     onNavigate={() => {
                       setOpen(false);
-                      if (onHome) selectHomeSection(icon);
+                      if (onHome && section) selectHomeSection(icon);
                     }}
                   >
                     <DockLabel label={label} active={active} Icon={icons[icon]} />

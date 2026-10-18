@@ -1,20 +1,24 @@
 import { Fragment } from "react";
-import type { BlogSummary, CraftSummary, WorkSummary } from "@/content/types";
+import type { BlogSummary, TestimonialSummary, WorkSummary } from "@/content/types";
 import { Hero } from "./hero.client";
 import { WorkSection } from "./work-section";
-import { ExperienceSection } from "./experience-section.client";
-import { StrengthsSection } from "./strengths-section.client";
-import { AboutSection } from "./about-section.client";
-import { CraftSection } from "./craft-section.client";
 import { InsightsSection } from "./insights-section.client";
+import { TestimonialsSection } from "./testimonials-section.client";
 
-export function HomePage({ work, craft, posts }: { work: WorkSummary[]; craft: CraftSummary[]; posts: BlogSummary[] }) {
+/** The home page stays focused on work and writing; the rest of the story lives on /about and /craft. */
+export function HomePage({
+  work,
+  testimonials,
+  posts,
+}: {
+  work: WorkSummary[];
+  testimonials: TestimonialSummary[];
+  posts: BlogSummary[];
+}) {
   const sections = [
     <WorkSection key="work" studies={work} />,
-    <ExperienceSection key="experience" />,
-    <StrengthsSection key="skills" />,
-    <AboutSection key="about" />,
-    <CraftSection key="craft" items={craft} />,
+    // Hidden until a testimonial is published, so the page never shows an empty section or a stray divider.
+    ...(testimonials.length ? [<TestimonialsSection key="testimonials" testimonials={testimonials} />] : []),
     <InsightsSection key="insights" posts={posts} />,
   ];
   return (

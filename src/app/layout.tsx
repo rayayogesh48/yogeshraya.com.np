@@ -8,6 +8,7 @@ import "@/styles/portfolio.css";
 import { Navbar, SiteDock } from "@/components/site/navbar";
 import { Footer } from "@/components/site/site-footer";
 import { ToastProvider } from "@/components/site/toast.client";
+import { GoogleAnalytics } from "@/components/site/google-analytics";
 import { PortfolioMotion } from "@/components/motion/portfolio-motion.client";
 import { ThemeProvider } from "@/components/theme/theme-provider.client";
 import { themeInitScript } from "@/components/theme/theme-init";
@@ -70,6 +71,7 @@ export default function RootLayout({
             </ToastProvider>
           </PortfolioMotion>
         </ThemeProvider>
+        <GoogleAnalytics />
       </body>
     </html>
   );

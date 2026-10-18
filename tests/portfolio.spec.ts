@@ -1,6 +1,9 @@
 import { test, expect } from "@playwright/test";
 import { auditAccessibility } from "./accessibility";
 
+// Client-side navigation updates the URL once the target page loads; a dev server compiles it on first visit.
+const NAVIGATION_TIMEOUT = 15_000;
+
 const publicRoutes = [
   "/",
   "/work",
@@ -92,7 +95,7 @@ test("theme persists, settings dismisses and restores keyboard focus", async ({
 test("disclosures expose content by keyboard and dock navigates between pages", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/about");
   const experience = page.getByRole("button", { name: /Karobar/ });
   await experience.focus();
   await page.keyboard.press("Enter");
@@ -120,7 +123,7 @@ test("disclosures expose content by keyboard and dock navigates between pages", 
     await expect(page.locator("h1")).toBeVisible();
   }
   await nav.getByRole("link", { name: "Home", exact: true }).click();
-  await expect(page).toHaveURL(/\/$/);
+  await expect(page).toHaveURL(/\/$/, { timeout: NAVIGATION_TIMEOUT });
 });
 
 for (const theme of ["Light", "Dark"]) {
@@ -228,7 +231,7 @@ test("case studies list published related insights in frontmatter order", async 
 
   await page.goto("/work/property-management-dashboard");
   await page.getByRole("region", { name: "Related insights" }).getByRole("link").first().click();
-  await expect(page).toHaveURL(/\/insight\/what-should-a-dashboard-show-first$/);
+  await expect(page).toHaveURL(/\/insight\/what-should-a-dashboard-show-first$/, { timeout: NAVIGATION_TIMEOUT });
   await expect(page.getByRole("link", { name: "Back to Insights" }).first()).toBeVisible();
 });
 

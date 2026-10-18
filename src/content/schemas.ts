@@ -61,6 +61,23 @@ export const craftSchema = z.object({
   status,
 }).strict();
 
+export const testimonialSchema = z.object({
+  name: nonempty,
+  company: nonempty,
+  /** Optional job title, shown before the company. */
+  role: nonempty.optional(),
+  /** Square photo under /images/testimonials/; initials show when it's missing. */
+  image: z.string().startsWith("/images/").optional(),
+  /** Company logo under /images/ (square or wide, SVG or image), shown beside the author. */
+  companyLogo: z.string().startsWith("/images/").optional(),
+  /** Lower numbers show first. */
+  order: z.number().int().positive().optional(),
+  /** Placeholder content: shown with a "Sample" badge in development, never included in production builds. */
+  sample: z.boolean().optional(),
+  status,
+}).strict();
+
 export type WorkFields = z.infer<typeof workSchema>;
 export type BlogFields = z.infer<typeof blogSchema>;
 export type CraftFields = z.infer<typeof craftSchema>;
+export type TestimonialFields = z.infer<typeof testimonialSchema>;

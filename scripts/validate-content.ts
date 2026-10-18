@@ -49,10 +49,10 @@ for (const role of experiences) {
 for (const [collection, entries] of Object.entries(catalog)) {
   for (const entry of entries) {
     if (entry.status !== "published") continue;
-    for (const match of entry.content.matchAll(/\/images\/[\w./-]+/g)) {
+    for (const match of entry.content.matchAll(/\/(?:images|videos)\/[\w./-]+/g)) {
       const asset = match[0];
       if (!fs.existsSync(path.join(process.cwd(), "public", asset))) {
-        throw new Error(`${collection}/${entry.slug}: missing referenced image ${asset}`);
+        throw new Error(`${collection}/${entry.slug}: missing referenced media ${asset}`);
       }
     }
     for (const match of entry.content.matchAll(/\]\(\/(work|insight|craft)\/([\w-]+)(?:#[\w-]+)?\)/g)) {

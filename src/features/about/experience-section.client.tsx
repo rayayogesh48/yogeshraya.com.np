@@ -85,7 +85,7 @@ function ExperienceEntry({ item }: { item: ExperienceItem }) {
 
 export function ExperienceSection() {
   return (
-    <section className="home-section" id="experience" data-dock="about" aria-labelledby="experience-heading">
+    <section className="home-section" id="experience" aria-labelledby="experience-heading">
       <WordReveal text="Experience" id="experience-heading" className="heading-section" />
       <Stagger className="exp-stack" gap={0.08}>
         {experiences.map((item) => (

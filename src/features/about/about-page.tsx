@@ -1,36 +1,18 @@
 import { ArrowUpRight, Download } from "lucide-react";
 import { aboutData, personal } from "@site/profile";
-import { experiences } from "@site/experience";
-import { StrengthsSection } from "@/features/home/strengths-section.client";
+import { AboutMeSection } from "./about-me-section.client";
+import { ExperienceSection } from "./experience-section.client";
+import { StrengthsSection } from "./strengths-section.client";
+import { LogoStrip } from "./logo-strip";
 import { CopyEmail } from "@/components/site/copy-email.client";
-
-/** Current roles come from the experience timeline, so the two pages can't drift apart. */
-const currentRoles = experiences.filter((item) => item.period.endsWith("Present"));
+import { BrandIcon } from "@/components/ui/brand-icons";
 
 export function AboutPage() {
   return (
     <div className="page-width subpage">
-      <header className="page-heading">
-        <h1>
-          Making complex tasks
-          <br className="desktop-break" /> feel simple.
-        </h1>
-        <p>{aboutData.intro}</p>
-        <p>{aboutData.approach}</p>
-        <dl className="about-facts">
-          <dt>Based in</dt>
-          <dd>Kathmandu, {aboutData.country}</dd>
-          {currentRoles.length > 0 && (
-            <>
-              <dt>Currently</dt>
-              <dd>{currentRoles.map((item) => `${item.role} at ${item.company}`).join(" · ")}</dd>
-            </>
-          )}
-          <dt>Languages</dt>
-          <dd>{personal.languages.join(" & ")}</dd>
-        </dl>
-      </header>
-
+      <AboutMeSection />
+      <ExperienceSection />
+      <LogoStrip />
       <StrengthsSection />
 
       <section className="home-section" aria-labelledby="tools-heading">
@@ -40,7 +22,12 @@ export function AboutPage() {
         <ul className="tool-list">
           {personal.tools.map((tool) => (
             <li key={tool.name}>
-              <span className="tool-name">{tool.name}</span>
+              <span className="tool-name">
+                <span className="tool-icon">
+                  <BrandIcon name={tool.icon} />
+                </span>
+                {tool.name}
+              </span>
               <span className="tool-use">{tool.use}</span>
             </li>
           ))}

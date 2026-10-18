@@ -1,5 +1,5 @@
 import { HomePage } from "@/features/home/home-page";
-import { listPublishedBlogPosts, listPublishedCraft, listPublishedWork } from "@/content/server";
+import { listPublishedBlogPosts, listPublishedTestimonials, listPublishedWork } from "@/content/server";
 import { pageMetadata } from "@/lib/seo";
 import { JsonLd, personSchema, websiteSchema } from "@/lib/structured-data";
 
@@ -14,7 +14,7 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[personSchema(), websiteSchema()]} />
-      <HomePage work={listPublishedWork()} craft={listPublishedCraft()} posts={listPublishedBlogPosts()} />
+      <HomePage work={listPublishedWork()} testimonials={listPublishedTestimonials()} posts={listPublishedBlogPosts()} />
     </>
   );
 }

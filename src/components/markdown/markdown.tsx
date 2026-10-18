@@ -36,15 +36,26 @@ export function MarkdownContent({ content }: { content: string }) {
               {children}
             </pre>
           ),
-          img: ({ src, alt }) => (
-            <img
-              src={src}
-              alt={alt || ""}
-              width={800}
-              height={450}
-              loading="lazy"
-            />
-          ),
+          // An image or video alone in a paragraph becomes a figure, which can't sit inside <p>.
+          p: ({ node, children }) => {
+            const only = node?.children.length === 1 ? node.children[0] : undefined;
+            return only?.type === "element" && only.tagName === "img" ? <>{children}</> : <p>{children}</p>;
+          },
+          // `![alt](/path "Caption")`: the title becomes a visible caption; .mp4/.webm sources render as video.
+          img: ({ src, alt, title }) => {
+            const source = typeof src === "string" ? src : "";
+            const media = /\.(mp4|webm)$/i.test(source) ? (
+              <video src={source} controls muted loop playsInline preload="metadata" aria-label={alt || title || "Video"} />
+            ) : (
+              <img src={source} alt={alt || ""} width={800} height={450} loading="lazy" />
+            );
+            return (
+              <figure className={styles.figure}>
+                {media}
+                {title && <figcaption>{title}</figcaption>}
+              </figure>
+            );
+          },
         }}
       >
         {content}

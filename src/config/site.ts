@@ -22,3 +22,8 @@ function validateOrigin(origin: string | undefined) {
 
 export const siteUrl = validateOrigin(suppliedOrigin);
 export const isPublicSite = deployment === "production" && Boolean(siteUrl);
+
+/** Google Analytics 4 measurement ID; override with NEXT_PUBLIC_GA_MEASUREMENT_ID. Only used on the public site. */
+const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() || "G-EBNBQG6GZ8";
+if (!/^G-[A-Z0-9]+$/.test(measurementId)) throw new Error("NEXT_PUBLIC_GA_MEASUREMENT_ID must look like G-XXXXXXXXXX");
+export const gaMeasurementId = measurementId;

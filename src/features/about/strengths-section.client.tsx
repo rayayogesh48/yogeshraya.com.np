@@ -11,7 +11,7 @@ export function StrengthsSection() {
   const [pinned, setPinned] = useState<number | null>(null);
   const active = hovered ?? pinned;
   return (
-    <section className="home-section" id="skills" data-dock="about" aria-labelledby="skills-heading">
+    <section className="home-section" id="skills" aria-labelledby="skills-heading">
       <WordReveal text="What I Do Best" id="skills-heading" className="heading-section" />
       <Stagger className="skill-manifesto" gap={0.08}>
         {strengths.map((item, index) => {
