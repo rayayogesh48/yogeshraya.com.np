@@ -6,12 +6,7 @@ export function WorkCollection({ publishedStudies }: { publishedStudies: WorkSum
   return (
     <div className="page-width subpage">
       <header className="page-heading">
-        <h1>
-          My Work
-          <span className="heading-count">
-            {String(publishedStudies.length).padStart(2, "0")}
-          </span>
-        </h1>
+        <h1>My Work</h1>
         <p>
           Selected client projects and website designs, with a focus on clarity,
           usability, and visual craft.

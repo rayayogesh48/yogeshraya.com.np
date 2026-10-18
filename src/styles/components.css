@@ -280,15 +280,6 @@ kbd {
   font-size: 16px;
   line-height: 1.85;
 }
-.heading-count {
-  display: inline-block;
-  font-size: 12px;
-  color: var(--muted);
-  margin-left: 13px;
-  letter-spacing: 0;
-  vertical-align: top;
-  padding-top: 5px;
-}
 .back-link {
   margin-bottom: 26px;
 }
