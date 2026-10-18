@@ -34,7 +34,7 @@ export function BlogDetail({ post }: { post: BlogEntry }) {
             src={post.cover}
             alt={post.coverAlt || post.title}
             width={800}
-            height={400}
+            height={450}
           />
         )}
       </header>

@@ -74,15 +74,21 @@
 .figure {
   margin: 28px 0;
 }
+/* Work and insight media share one 16:9 frame; images fill it, videos keep their whole picture. */
 .figure img,
 .figure video {
   display: block;
   width: 100%;
   height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
   border-radius: 14px;
   background: var(--surface);
   /* Screenshots of this same site would otherwise blend into the page around them. */
   border: 1px solid var(--line);
+}
+.figure video {
+  object-fit: contain;
 }
 .figure figcaption {
   margin-top: 10px;

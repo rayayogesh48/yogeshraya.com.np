@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="100%" height="100%" fill="none">
-  <rect width="800" height="400" rx="12" fill="#0c0d0e" stroke="#23252a" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%" fill="none">
+  <rect width="800" height="450" rx="12" fill="#0c0d0e" stroke="#23252a" stroke-width="1"/>
+  <g transform="translate(0 25)">
   
   <text x="40" y="50" fill="#8a8f98" font-family="monospace" font-size="12">DECISION TREE COMPRESSION</text>
 
@@ -40,5 +41,5 @@
   <text x="460" y="265" fill="#08090a" font-family="monospace" font-size="11" font-weight="600">Deploy Now</text>
 
   <text x="440" y="320" fill="#62666d" font-family="monospace" font-size="11">Avg completion: 35s (98% completion rate)</text>
+  </g>
 </svg>
-

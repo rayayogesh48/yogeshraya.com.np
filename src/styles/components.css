@@ -325,6 +325,8 @@ kbd {
   margin-top: 28px;
   width: 100%;
   height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
   border-radius: 16px;
   border: 1px solid var(--line);
 }

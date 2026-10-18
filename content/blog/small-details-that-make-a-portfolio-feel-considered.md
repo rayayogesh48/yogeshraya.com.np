@@ -49,9 +49,9 @@ The same row is now a shared component, so the home page, the Insights page, and
 
 The old About page opened with a grid of cards. Two of them said "Not shared yet", one repeated the clock that already sits in the footer, and the tool icons were letters standing in for logos.
 
-![The previous About page header: three paragraphs of intro and a grid of cards, two of which say "Not shared yet"](/images/blog/portfolio-details/about-before.webp "Before: placeholder cards and a duplicate clock.")
+![The previous About page: the end of a long intro, then a grid of cards with a large clock and one card saying "Not shared yet"](/images/blog/portfolio-details/about-before.webp "Before: placeholder cards and a duplicate clock.")
 
-![The new About page header: a short intro, three facts (based in, currently, languages), then the About me section](/images/blog/portfolio-details/about-after.webp "After: one short intro, three facts, and straight into the story.")
+![The new About page header: the headline, a short intro, and three facts (based in, currently, languages)](/images/blog/portfolio-details/about-after.webp "After: one short intro, three facts, and straight into the story.")
 
 The new version keeps one intro paragraph and three facts. The "Currently" line comes straight from my experience data, so the About page and the timeline can't disagree.
 
