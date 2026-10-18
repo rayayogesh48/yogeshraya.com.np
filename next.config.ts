@@ -15,8 +15,9 @@ const nextConfig: NextConfig = {
     return [
       { source: "/blog", destination: "/insight", permanent: true },
       { source: "/blog/:slug", destination: "/insight/:slug", permanent: true },
-      // The property management case study was replaced by the Karobar redesign; keep indexed links working.
-      { source: "/work/property-management-dashboard", destination: "/work/bookkeeping-app-redesign-small-business", permanent: true },
+      // The property management case study was replaced by the Karobar case study; keep indexed links working.
+      { source: "/work/property-management-dashboard", destination: "/work/karobar-app-product-design", permanent: true },
+      { source: "/work/bookkeeping-app-redesign-small-business", destination: "/work/karobar-app-product-design", permanent: true },
     ];
   },
 };

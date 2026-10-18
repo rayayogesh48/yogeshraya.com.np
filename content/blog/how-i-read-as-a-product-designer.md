@@ -2,6 +2,9 @@
 title: "How I read as a product designer"
 description: "Reading only helps when it changes the next decision you make. How I pick design books, read them with a problem in mind, and turn them into practice."
 date: "2026-10-18"
+updated: null
+cover: null
+coverAlt: null
 status: "published"
 ---
 

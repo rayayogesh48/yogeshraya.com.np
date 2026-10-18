@@ -1,5 +1,6 @@
 ---
 title: "Briz — Simplifying Invoicing & Daily Tasks"
+seoTitle: null
 role: "Product Designer · Bytecare Technology"
 timeline: "Product Design & Prototyping"
 summary: "Small business owners found multi-item invoicing and transaction tracking on mobile clumsy and slow, leading to billing mistakes and delayed customer payments."
@@ -9,11 +10,7 @@ tags:
   - "Mobile UX"
   - "User Research"
   - "Interaction Design"
-featuredOrder: 2
-relatedInsights:
-  - "designing-clearer-product-flows"
-  - "better-product-design-feedback"
-kind: "case-study"
+cover: null
 gallery:
   - src: "/images/case-studies/agent-mesh.svg"
     alt: "Briz mobile invoice creation screen"
@@ -23,6 +20,11 @@ gallery:
     alt: "Briz payment tracking screen"
     width: 1080
     height: 1920
+featuredOrder: 2
+relatedInsights:
+  - "designing-clearer-product-flows"
+  - "better-product-design-feedback"
+kind: "case-study"
 status: "published"
 ---
 

@@ -2,6 +2,9 @@
 title: "Small details that make a portfolio feel considered"
 description: "A walkthrough of the motion, hover states, and cuts I made while polishing this portfolio, with recordings of each detail and why it changed."
 date: "2026-10-18"
+updated: null
+cover: null
+coverAlt: null
 status: "published"
 ---
 

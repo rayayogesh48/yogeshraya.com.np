@@ -2,6 +2,9 @@
 title: "How to give product design feedback that actually helps"
 description: "Why stating the problem and what is failing produces better design solutions than prescribing button changes."
 date: "2026-09-23"
+updated: null
+cover: null
+coverAlt: null
 status: "draft"
 ---
 

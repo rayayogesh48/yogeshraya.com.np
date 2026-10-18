@@ -1,9 +1,10 @@
 ---
-# SAMPLE: replace with a real, approved testimonial, then delete `sample: true`.
+# SAMPLE: replace with a real, approved testimonial, then set `sample` to null.
 name: "Sam Rivera"
-company: "Demo Fintech"
 role: "Founder"
+company: "Demo Fintech"
 companyLogo: "/images/testimonials/sample-logo-3.svg"
+image: null
 order: 3
 sample: true
 status: "published"

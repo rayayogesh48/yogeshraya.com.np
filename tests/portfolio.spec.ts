@@ -10,7 +10,7 @@ const publicRoutes = [
   "/about",
   "/craft",
   "/insight",
-  "/work/bookkeeping-app-redesign-small-business",
+  "/work/karobar-app-product-design",
   "/work/briz-mobile-workflow",
   "/work/sync-engine-crdt",
   "/insight/designing-clearer-product-flows",
@@ -213,7 +213,7 @@ test("reduced motion and mobile settings preserve usable controls", async ({
 });
 
 test("case studies list published related insights in frontmatter order", async ({ page }) => {
-  await page.goto("/work/bookkeeping-app-redesign-small-business");
+  await page.goto("/work/karobar-app-product-design");
   const related = page.getByRole("region", { name: "Related insights" });
   await expect(related.getByRole("heading", { level: 3 })).toHaveText([
     "What should a product dashboard show first?",
@@ -229,7 +229,7 @@ test("case studies list published related insights in frontmatter order", async 
   await page.goto("/work/sync-engine-crdt");
   await expect(page.getByRole("region", { name: "Related insights" })).toHaveCount(0);
 
-  await page.goto("/work/bookkeeping-app-redesign-small-business");
+  await page.goto("/work/karobar-app-product-design");
   await page.getByRole("region", { name: "Related insights" }).getByRole("link").first().click();
   await expect(page).toHaveURL(/\/insight\/what-should-a-dashboard-show-first$/, { timeout: NAVIGATION_TIMEOUT });
   await expect(page.getByRole("link", { name: "Back to Insights" }).first()).toBeVisible();
@@ -239,7 +239,8 @@ test("old URLs permanently redirect to their new pages", async ({ request }) => 
   for (const [from, to] of [
     ["/blog", "/insight"],
     ["/blog/designing-clearer-product-flows", "/insight/designing-clearer-product-flows"],
-    ["/work/property-management-dashboard", "/work/bookkeeping-app-redesign-small-business"],
+    ["/work/property-management-dashboard", "/work/karobar-app-product-design"],
+    ["/work/bookkeeping-app-redesign-small-business", "/work/karobar-app-product-design"],
   ]) {
     const response = await request.get(from, { maxRedirects: 0 });
     expect(response.status(), from).toBe(308);
@@ -275,7 +276,7 @@ test.skip("immersive reader opens from the button or R, keeps focus inside, and 
 
 // The immersive reader is hidden for now (src/config/features.ts); re-enable these with it.
 test.skip("first visit introduces the immersive reader once", async ({ page }) => {
-  await page.goto("/work/bookkeeping-app-redesign-small-business");
+  await page.goto("/work/karobar-app-product-design");
   const intro = page.locator(".reader-intro");
   await expect(intro).toBeVisible();
   await expect(page.getByRole("button", { name: /Immersive reader/ })).toHaveAttribute("data-intro", "on");

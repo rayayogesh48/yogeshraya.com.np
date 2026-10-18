@@ -1,9 +1,10 @@
 ---
-# SAMPLE: replace with a real, approved testimonial, then delete `sample: true`.
+# SAMPLE: replace with a real, approved testimonial, then set `sample` to null.
 name: "Priya Shrestha"
-company: "Sample Agency"
 role: "Creative Director"
+company: "Sample Agency"
 companyLogo: "/images/testimonials/sample-logo-2.svg"
+image: null
 order: 2
 sample: true
 status: "published"

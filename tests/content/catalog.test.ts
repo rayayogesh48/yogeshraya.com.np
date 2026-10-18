@@ -14,7 +14,7 @@ function fixture(files: Record<string, string>, collection = "work") {
   for (const [name, content] of Object.entries(files)) fs.writeFileSync(path.join(directory, name), content);
   return root;
 }
-const work = (status: string, order: number) => `---\ntitle: Sample\nsummary: Test\nrole: Designer\ntags: []\nkind: showcase\nstatus: ${status}\nfeaturedOrder: ${order}\n---\nBody`;
+const work = (status: string, order: number) => `---\ntitle: Sample\nseoTitle: null\ntimeline: null\ndescription: null\nupdated: null\ngallery: null\nrelatedInsights: null\nsummary: Test\nrole: Designer\ntags: []\nkind: showcase\nstatus: ${status}\nfeaturedOrder: ${order}\ncover: null\n---\nBody`;
 afterEach(() => roots.splice(0).forEach((root) => fs.rmSync(root, { recursive: true, force: true })));
 
 describe("work catalog", () => {
@@ -34,12 +34,12 @@ describe("work catalog", () => {
   });
 
   it("fails a missing published asset", () => {
-    const root = fixture({ "sample.md": work("published", 1).replace("---\nBody", "cover:\n  src: /images/missing.webp\n  alt: Preview\n  width: 800\n  height: 600\n---\nBody") });
+    const root = fixture({ "sample.md": work("published", 1).replace("cover: null\n---\nBody", "cover:\n  src: /images/missing.webp\n  alt: Preview\n  width: 800\n  height: 600\n---\nBody") });
     expect(() => listWork(root)).toThrow(/missing local asset/);
   });
 });
 
-const article = (status: string, date: string) => `---\ntitle: Article ${date}\ndescription: Test\ndate: "${date}"\nstatus: ${status}\n---\nBody`;
+const article = (status: string, date: string) => `---\ntitle: Article ${date}\ndescription: Test\ndate: "${date}"\nupdated: null\ncover: null\ncoverAlt: null\nstatus: ${status}\n---\nBody`;
 
 describe("related insights", () => {
   it("keeps the requested order and skips drafts and unknown slugs", () => {

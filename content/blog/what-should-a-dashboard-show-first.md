@@ -2,6 +2,9 @@
 title: "What should a product dashboard show first?"
 description: "Why action-oriented triage beats vanity charts when designing interfaces for busy operators."
 date: "2026-08-15"
+updated: null
+cover: null
+coverAlt: null
 status: "published"
 ---
 

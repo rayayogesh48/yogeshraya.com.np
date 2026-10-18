@@ -1,5 +1,6 @@
 ---
 title: "Real-Time Collaborative Document Canvas"
+seoTitle: null
 role: "Product Designer"
 timeline: "Interaction Architecture"
 summary: "Distributed team members experienced confusing interface states, blocking saving spinners, and lost edits during concurrent collaborative sessions."
@@ -14,7 +15,9 @@ cover:
   alt: "Diagram showing two local clients exchanging changes through a synchronization relay"
   width: 800
   height: 450
+gallery: null
 featuredOrder: 3
+relatedInsights: null
 kind: "case-study"
 status: "published"
 ---

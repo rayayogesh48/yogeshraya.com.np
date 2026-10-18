@@ -26,7 +26,7 @@ export const workSchema = z.object({
   updated: date.optional(),
   role: nonempty,
   timeline: nonempty.optional(),
-  tags: z.array(nonempty),
+  tags: z.array(nonempty).default([]),
   kind: z.enum(["case-study", "showcase"]),
   status,
   featuredOrder: z.number().int().positive().optional(),

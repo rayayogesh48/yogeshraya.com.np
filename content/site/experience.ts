@@ -14,7 +14,7 @@ export const experiences: ExperienceItem[] = [
   {
     company: "Overlays Studio",
     role: "Lead Designer",
-    period: "Dec 2025 — Present",
+    period: "Dec 2025 - Present",
     location: "Kathmandu, Nepal",
     logo: "/images/logo/overlay-logo.webp",
     summary:
@@ -29,7 +29,7 @@ export const experiences: ExperienceItem[] = [
   {
     company: "Karobar",
     role: "Product Designer",
-    period: "Apr 2023 — Present",
+    period: "Apr 2023 - Present",
     location: "Lalitpur, Nepal",
     logo: "/images/logo/karobar-logo.webp",
     summary:
@@ -39,12 +39,12 @@ export const experiences: ExperienceItem[] = [
       "Designed clear and engaging interfaces for web and mobile.",
       "Collaborated with developers to ensure smooth design handoff.",
     ],
-    caseStudySlug: "bookkeeping-app-redesign-small-business",
+    caseStudySlug: "karobar-app-product-design",
   },
   {
     company: "InternSathi",
     role: "UI Designer",
-    period: "Jan 2023 — Aug 2024",
+    period: "Jan 2023 - Aug 2024",
     location: "Biratnagar, Nepal",
     summary:
       "Designed components for web and mobile apps, keeping them simple, modern, and easy to use, with a focus on usability and a seamless experience.",
@@ -57,7 +57,7 @@ export const experiences: ExperienceItem[] = [
   {
     company: "Lanceme Up",
     role: "UI Designer",
-    period: "Jan 2023 — Jun 2023",
+    period: "Jan 2023 - Jun 2023",
     location: "Kathmandu, Nepal",
     summary:
       "Led the UI/UX redesign of Lanceme Up V3 across web and mobile, making it modern, functional, and easy to navigate.",
@@ -70,7 +70,7 @@ export const experiences: ExperienceItem[] = [
   {
     company: "Brand Builder",
     role: "UI Designer",
-    period: "Jun 2022 — Jan 2023",
+    period: "Jun 2022 - Jan 2023",
     contributions: [
       "Led design reviews and gave feedback to entry-level designers (interns).",
       "Helped create mobile app wireframes, mockups, and prototypes.",
@@ -79,7 +79,7 @@ export const experiences: ExperienceItem[] = [
   {
     company: "Binwary",
     role: "Designer & HTML Developer",
-    period: "Aug 2021 — Jan 2022",
+    period: "Aug 2021 - Jan 2022",
     location: "Biratnagar, Nepal",
     summary:
       "Started my journey in web design and development, learning to create clean, structured, user-friendly interfaces and seeing how design and development connect.",
