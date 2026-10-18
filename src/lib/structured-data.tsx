@@ -47,7 +47,7 @@ export function articleSchema(post: BlogEntry): Thing {
     headline: post.title,
     description: post.description,
     datePublished: post.date,
-    dateModified: post.date,
+    dateModified: post.updated ?? post.date,
     inLanguage: "en",
     author: personId ? { "@id": personId, "@type": "Person", name: aboutData.name } : { "@type": "Person", name: aboutData.name },
     ...(url ? { url, mainEntityOfPage: url } : {}),

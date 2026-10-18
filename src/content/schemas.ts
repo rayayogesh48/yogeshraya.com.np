@@ -44,6 +44,8 @@ export const blogSchema = z.object({
   title: nonempty,
   description: nonempty,
   date,
+  /** Last meaningful edit after publishing, for the sitemap and structured data. */
+  updated: date.optional(),
   status,
   cover: z.string().startsWith("/images/").optional(),
   coverAlt: nonempty.optional(),

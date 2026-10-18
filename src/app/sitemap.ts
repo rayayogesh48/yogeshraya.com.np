@@ -1,35 +1,55 @@
 import type { MetadataRoute } from "next";
-import { listPublishedBlogPosts, listPublishedCraft, listPublishedWork } from "@/content/server";
+import { listBlog, listCraft, listWork } from "@/content/catalog";
 import { isPublicSite, siteUrl } from "@/config/site";
 import { insightPath, insightsPath } from "@/config/routes";
 
+/**
+ * Every indexable page, matching each page's canonical URL exactly. `lastmod` only comes from real content dates
+ * (Google ignores it when it looks inaccurate), and pages list their images so Google Images can find them.
+ * `priority` and `changefreq` are left out because Google ignores them.
+ */
+
+type Entry = MetadataRoute.Sitemap[number];
+
 /** Newest of the given YYYY-MM-DD dates, so listing pages change when something in them does. */
 function latest(dates: (string | undefined)[]) {
-  const known = dates.filter((date): date is string => Boolean(date)).sort();
-  return known.length ? new Date(known[known.length - 1]) : undefined;
+  return dates.filter((date): date is string => Boolean(date)).sort().at(-1);
+}
+
+/** Local images used in a Markdown body (videos live under /videos and are not images). */
+function bodyImages(markdown: string) {
+  return [...markdown.matchAll(/!\[[^\]]*\]\((\/images\/[^\s)]+)/g)].map((match) => match[1]);
+}
+
+function page(path: string, updated?: string, images: (string | undefined)[] = []): Entry {
+  const unique = [...new Set(images.filter((image): image is string => Boolean(image)))];
+  return {
+    url: `${siteUrl}${path}`,
+    ...(updated ? { lastModified: updated } : {}),
+    ...(unique.length ? { images: unique.map((image) => `${siteUrl}${image}`) } : {}),
+  };
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
   if (!isPublicSite) return [];
-  const work = listPublishedWork();
-  const craft = listPublishedCraft();
-  const posts = listPublishedBlogPosts();
+  const work = listWork();
+  const craft = listCraft();
+  const posts = listBlog();
   const workUpdated = latest(work.map((study) => study.updated));
   const craftUpdated = latest(craft.map((item) => item.date));
-  const postsUpdated = latest(posts.map((post) => post.date));
-  const page = (route: string, priority: number, lastModified?: Date): MetadataRoute.Sitemap[number] => ({
-    url: `${siteUrl}${route}`,
-    priority,
-    ...(lastModified ? { lastModified } : {}),
-  });
+  const postsUpdated = latest(posts.map((post) => post.updated ?? post.date));
+
   return [
-    page("", 1, latest([workUpdated, craftUpdated, postsUpdated].map((date) => date?.toISOString().slice(0, 10)))),
-    page("/work", 0.8, workUpdated),
-    page("/about", 0.8),
-    page("/craft", 0.8, craftUpdated),
-    page(insightsPath, 0.8, postsUpdated),
-    ...work.map((study) => page(`/work/${study.slug}`, 0.8, study.updated ? new Date(study.updated) : undefined)),
-    ...craft.map((item) => page(`/craft/${item.slug}`, 0.5, item.date ? new Date(item.date) : undefined)),
-    ...posts.map((post) => page(insightPath(post.slug), 0.7, new Date(post.date))),
+    // Next.js renders the home canonical without a trailing slash; the sitemap must match it exactly.
+    page("", latest([workUpdated, postsUpdated])),
+    page("/work", workUpdated, work.map((study) => study.cover?.src ?? study.gallery?.[0]?.src)),
+    page("/about"),
+    page("/craft", craftUpdated, craft.map((item) => item.image.src)),
+    page(insightsPath, postsUpdated),
+    ...work.map((study) =>
+      page(`/work/${study.slug}`, study.updated, [study.cover?.src, ...(study.gallery ?? []).map((image) => image.src), ...bodyImages(study.content)]),
+    ),
+    ...craft.map((item) => page(`/craft/${item.slug}`, item.date, [item.image.src, ...bodyImages(item.content)])),
+    ...posts.map((post) => page(insightPath(post.slug), post.updated ?? post.date, [post.cover, ...bodyImages(post.content)])),
   ];
 }

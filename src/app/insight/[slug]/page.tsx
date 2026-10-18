@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props) {
   const metadata = pageMetadata(post.title, post.description, insightPath(post.slug));
   return {
     ...metadata,
-    openGraph: { ...metadata.openGraph, type: "article" as const, publishedTime: post.date, authors: ["Yogesh Raya"] },
+    openGraph: { ...metadata.openGraph, type: "article" as const, publishedTime: post.date, ...(post.updated ? { modifiedTime: post.updated } : {}), authors: ["Yogesh Raya"] },
   };
 }
 export default async function Page({ params }: Props) {
