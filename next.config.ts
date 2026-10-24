@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
   },
   // Keep a running development server from overwriting production build files.
   distDir: process.env.NODE_ENV === "development" ? ".next-dev" : ".next",
+  // Browsers and crawlers ask for /favicon.ico regardless of the page's icon links; serve the one site icon there.
+  async rewrites() {
+    return [{ source: "/favicon.ico", destination: "/icon.png" }];
+  },
   // Articles moved from /blog to /insight; keep old links and search results working.
   async redirects() {
     return [

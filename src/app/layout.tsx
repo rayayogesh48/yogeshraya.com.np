@@ -31,6 +31,12 @@ export const metadata: Metadata = {
   },
   description: siteDescription,
   robots: { index: isPublicSite, follow: isPublicSite },
+  // One image for every icon: the browser tab, bookmarks, the iOS home screen and the app manifest.
+  icons: {
+    icon: [{ url: "/icon.png", type: "image/png", sizes: "512x512" }],
+    shortcut: "/icon.png",
+    apple: [{ url: "/icon.png", sizes: "512x512" }],
+  },
   // Search Console's HTML-tag verification; not needed when the domain is verified through DNS.
   ...(process.env.GOOGLE_SITE_VERIFICATION ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } } : {}),
 };
