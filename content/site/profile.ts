@@ -26,6 +26,7 @@ export interface AboutData {
   socials: {
     github?: string;
     twitter?: string;
+    dribbble?: string;
     linkedin?: string;
   };
 }
@@ -53,9 +54,10 @@ export const aboutData: AboutData = {
     "I’m Yogesh, a product designer based in Nepal. I turn user problems into clear flows and thoughtful interfaces for digital products.",
   approach:
     "I care about the decisions behind the screen: what people need to do, where they get stuck, and how a design can help them move forward. My work focuses on understanding the problem, exploring practical solutions, and making the next step clear.",
-  email: "",
+  email: "yogeshraya01@gmail.com",
   socials: {
     linkedin: "https://www.linkedin.com/in/yogeshraya01/",
+    dribbble: "https://dribbble.com/yogeshraya0",
   },
 };
 

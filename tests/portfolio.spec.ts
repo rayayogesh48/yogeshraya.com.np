@@ -37,7 +37,7 @@ for (const width of [320, 390, 1440]) {
       expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(width);
       await page.locator("footer").scrollIntoViewIfNeeded();
       await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-      const footer = await page.locator(".foot-row--bottom").boundingBox();
+      const footer = await page.locator(".foot-links").boundingBox();
       const dock = await nav.boundingBox();
       expect(footer!.y + footer!.height).toBeLessThan(dock!.y);
       await expect(
@@ -197,7 +197,7 @@ test("reduced motion and mobile settings preserve usable controls", async ({
   await page.setViewportSize({ width: 320, height: 700 });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/about");
-  await expect(page.locator("footer .foot-time")).toContainText("in Nepal");
+  await expect(page.locator("footer .foot-links")).toContainText("LinkedIn");
   await page.getByRole("button", { name: "Settings", exact: true }).click();
   const box = await page.getByRole("group", { name: "Settings" }).boundingBox();
   expect(box!.x).toBeGreaterThanOrEqual(0);

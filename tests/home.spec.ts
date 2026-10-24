@@ -78,11 +78,12 @@ test.describe("home page", () => {
     await expect(strength).toHaveAttribute("aria-expanded", "true");
   });
 
-  test("footer shows local time and only real social links", async ({ page }) => {
+  test("footer shows only real social links", async ({ page }) => {
     const footer = page.locator("footer");
     await footer.scrollIntoViewIfNeeded();
-    await expect(footer.locator(".foot-time")).toContainText("in Nepal");
     await expect(footer.getByRole("link", { name: /LinkedIn/ })).toHaveAttribute("href", /linkedin\.com/);
+    await expect(footer.getByRole("link", { name: /Dribbble/ })).toHaveAttribute("href", /dribbble\.com/);
+    await expect(footer.getByRole("link", { name: /^Email/ })).toHaveAttribute("href", /^mailto:/);
     await expect(footer.getByRole("link", { name: /GitHub|on X/ })).toHaveCount(0);
   });
 });
