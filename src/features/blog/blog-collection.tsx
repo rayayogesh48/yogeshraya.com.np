@@ -1,4 +1,4 @@
-import { InsightList } from "./insight-list";
+import { InsightArchive } from "./insight-archive.client";
 import type { BlogSummary } from "@/content/types";
 
 export function BlogCollection({ posts }: { posts: BlogSummary[] }) {
@@ -11,7 +11,7 @@ export function BlogCollection({ posts }: { posts: BlogSummary[] }) {
           problems.
         </p>
       </header>
-      <InsightList posts={posts} showReadingTime />
+      <InsightArchive posts={posts} />
     </div>
   );
 }

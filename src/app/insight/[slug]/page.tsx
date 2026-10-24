@@ -25,7 +25,7 @@ export default async function Page({ params }: Props) {
   return (
     <>
       <JsonLd data={articleSchema(post)} />
-      <BlogDetail post={post} />
+      <BlogDetail post={post} more={listPublishedBlogPosts().filter((other) => other.slug !== post.slug).slice(0, 3)} />
     </>
   );
 }

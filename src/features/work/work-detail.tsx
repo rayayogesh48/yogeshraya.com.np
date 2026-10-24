@@ -46,7 +46,7 @@ export function WorkDetail({ study, insights }: { study: WorkEntry; insights: Bl
       {insights.length > 0 && (
         <section className="related-insights" aria-labelledby="related-insights-heading">
           <h2 id="related-insights-heading">Related insights</h2>
-          <InsightList posts={insights} titleAs="h3" showReadingTime />
+          <InsightList posts={insights} titleAs="h3" />
         </section>
       )}
       <div className="article-footer">

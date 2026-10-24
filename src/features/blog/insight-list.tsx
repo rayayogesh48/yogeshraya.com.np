@@ -1,55 +1,56 @@
 import Link from "next/link";
 import type { BlogSummary } from "@/content/types";
-import { ArrowUpRightIcon } from "@/components/ui/icons";
 import { insightPath } from "@/config/routes";
-import { formatDate } from "./format-date";
+import { formatDate, formatDay } from "./format-date";
 
 type TitleTag = "h2" | "h3";
 
-/** One insight link: title and description on the left, date (and optional reading time) with a hover arrow on the right. */
+/**
+ * One insight card: title, a short subtitle and a small date line on the left, with the post's thumbnail on the
+ * right when it has one. `compactDate` drops the year for lists that already sit under a month heading.
+ */
 export function InsightRow({
   post,
   titleAs: Title = "h3",
-  showReadingTime = false,
+  compactDate = false,
 }: {
   post: BlogSummary;
   titleAs?: TitleTag;
-  showReadingTime?: boolean;
+  compactDate?: boolean;
 }) {
   return (
     <Link className="insights-row" href={insightPath(post.slug)}>
-      <span>
+      <span className="insights-text">
         <Title>{post.title}</Title>
         <p>{post.description}</p>
-      </span>
-      <span className="insights-meta">
-        <time dateTime={post.date}>{formatDate(post.date)}</time>
-        {showReadingTime && <span className="insights-reading">{post.readingTime}</span>}
-        <span className="insights-arrow" aria-hidden="true">
-          <ArrowUpRightIcon size={13} />
+        <span className="insights-meta">
+          <time dateTime={post.date}>{compactDate ? formatDay(post.date) : formatDate(post.date)}</time>
+          <span aria-hidden="true">·</span>
+          <span>{post.readingTime}</span>
         </span>
       </span>
+      {post.thumbnail && (
+        <img className="insights-thumb" src={post.thumbnail.src} alt="" width={160} height={90} loading="lazy" />
+      )}
     </Link>
   );
 }
 
-/** Static list of insights, shared by the insights index and related-insights sections. The home page animates the same rows. */
+/** Static list of insight cards, used for related insights and "more insights" lists. The home page animates the same cards. */
 export function InsightList({
   posts,
   titleAs = "h2",
-  showReadingTime = false,
 }: {
   posts: BlogSummary[];
   /** Use "h3" when the list sits under its own section heading. */
   titleAs?: TitleTag;
-  showReadingTime?: boolean;
 }) {
   if (!posts.length) return <p className="section-empty">Insights coming soon.</p>;
   return (
     <div className="insights-list">
       {posts.map((post) => (
         <article className="insights-item" key={post.slug}>
-          <InsightRow post={post} titleAs={titleAs} showReadingTime={showReadingTime} />
+          <InsightRow post={post} titleAs={titleAs} />
         </article>
       ))}
     </div>

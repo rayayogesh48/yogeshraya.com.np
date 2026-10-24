@@ -7,7 +7,8 @@ export type WorkEntry = WorkFields & { slug: string; content: string };
 // Related insights resolve on the server; summaries reach client components and must not expose draft slugs.
 export type WorkSummary = Omit<WorkEntry, "content" | "status" | "relatedInsights">;
 export type BlogEntry = BlogFields & { slug: string; content: string; readingTime: string };
-export type BlogSummary = Omit<BlogEntry, "content" | "status">;
+/** `thumbnail` is the cover, or else the first image in the post, for list cards. */
+export type BlogSummary = Omit<BlogEntry, "content" | "status"> & { thumbnail?: { src: string; alt: string } };
 export type CraftEntry = CraftFields & { slug: string; content: string };
 export type CraftSummary = Omit<CraftEntry, "content" | "status">;
 /** The quote is the file's body. */
