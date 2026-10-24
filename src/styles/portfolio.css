@@ -484,6 +484,18 @@ kbd {
 @keyframes mascot-in { from { opacity: 0; transform: translateY(12px); } }
 @media print { .site-mascot { display: none; } }
 
+/* Error pages (404, 500): full screen, the code as halftone peaks under the copy, with the site chrome hidden. */
+.error-screen { position: fixed; inset: 0; z-index: 200; display: grid; grid-template-rows: auto minmax(0, 1fr); background: var(--bg); overflow: hidden; }
+body:has(.error-screen) :is(.topnav, .footer, .dock, .dock-blur, .site-mascot, .scroll-progress) { display: none; }
+html:has(.error-screen) { overflow: hidden; }
+.error-screen-copy { padding-top: clamp(40px, 10vh, 112px); }
+.error-screen-code { font-family: var(--font-jetbrains), ui-monospace, monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dimmed); }
+.error-screen-copy h1 { margin-top: 12px; font-size: clamp(2.25rem, 6vw, 3.5rem); line-height: 1.05; letter-spacing: -0.035em; font-weight: 700; color: var(--fg); }
+.error-screen-copy p:not(.error-screen-code) { margin-top: 14px; max-width: 46ch; font-size: 17px; line-height: 1.6; color: var(--muted); }
+.error-screen-copy .button { margin-top: 28px; }
+.error-screen-stage { position: relative; min-height: 0; }
+.lost-field { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: crosshair; touch-action: pan-y; }
+
 /* ───────────── Responsive ───────────── */
 @media (max-width: 640px) {
   .banner { height: 180px; }

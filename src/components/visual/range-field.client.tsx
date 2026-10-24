@@ -14,7 +14,7 @@ const ALPHA_STEPS = 12;
 const GUST_SECONDS = 2.6;
 const LAMP_RADIUS = 80;
 const EVEREST_METRES = 8849;
-const ALPENGLOW: Rgb = [255, 120, 70];
+export const ALPENGLOW: Rgb = [255, 120, 70];
 const DOT_SIZE = [1.2, 1.45, 1.7, 2];
 /** Each layer is brightest along its ridge and fades towards its floor further down, so the layers separate. */
 const RIDGE_ALPHA = [0.42, 0.34, 0.28, 0.22];
@@ -43,12 +43,12 @@ const HILLS = [
   { base: 1.02, amplitude: 0.17, frequency: 2.2, seed: 37, sharpness: 1.1 },
 ];
 
-function hash(i: number, j: number) {
+export function hash(i: number, j: number) {
   const value = Math.sin(i * 127.1 + j * 311.7) * 43758.5453;
   return value - Math.floor(value);
 }
 
-function noise(x: number, y: number) {
+export function noise(x: number, y: number) {
   const ix = Math.floor(x);
   const iy = Math.floor(y);
   const fx = x - ix;
@@ -60,11 +60,11 @@ function noise(x: number, y: number) {
   return top + (bottom - top) * uy;
 }
 
-function fbm(x: number, y: number) {
+export function fbm(x: number, y: number) {
   return 0.55 * noise(x, y) + 0.3 * noise(x * 2.03, y * 2.03) + 0.15 * noise(x * 4.11, y * 4.11);
 }
 
-const clamp = (value: number, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+export const clamp = (value: number, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 
 /** Screen y of a layer's ridge at horizontal position `u` (0–1). Layer 0 is the high range, 3 the nearest hills. */
 function ridgeline(layer: number, u: number, height: number) {
@@ -87,7 +87,7 @@ function ridgeline(layer: number, u: number, height: number) {
 }
 
 /** How the range is lit right now in Nepal: alpenglow strength, how dark it is, and where the light comes from. */
-function nepalLight(now: Date) {
+export function nepalLight(now: Date) {
   const time = now.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZone: "Asia/Kathmandu" });
   const [hour, minute] = now
     .toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Asia/Kathmandu" })
@@ -102,7 +102,7 @@ function nepalLight(now: Date) {
   return { label: `${time.toUpperCase()} IN KATHMANDU · ${phase}`, shortLabel: `${time.toUpperCase()} · ${phase}`, glow, night, lightX };
 }
 
-function monoFont(size: number) {
+export function monoFont(size: number) {
   const family = getComputedStyle(document.documentElement).getPropertyValue("--font-jetbrains").trim();
   return `500 ${size}px ${family || "ui-monospace"}, ui-monospace, monospace`;
 }

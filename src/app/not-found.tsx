@@ -1,16 +1,12 @@
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ErrorScreen } from "@/components/site/error-screen";
+
 export default function NotFound() {
   return (
-    <div className="page-width subpage">
-      <header className="page-heading">
-        <h1>A little off the path.</h1>
-        <p>This page may have moved, or it isn’t available yet.</p>
-      </header>
-      <Link href="/" className="button primary">
-        <ArrowLeft size={16} />
-        Back to Home
-      </Link>
-    </div>
+    <ErrorScreen
+      code="404"
+      label="Error 404 · Page not found"
+      title="A little off the path."
+      message="This page may have moved, or it isn’t available yet."
+    />
   );
 }
