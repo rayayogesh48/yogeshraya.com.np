@@ -237,6 +237,11 @@ kbd {
 .article-body { margin-top: 32px; font-size: 18px; line-height: 1.75; }
 .article-body :is(h2, h3) { scroll-margin-top: 96px; }
 .more-insights { margin-top: 56px; }
+/* Case study facts (role, focus) under the subtitle, in the same small uppercase voice as other meta. */
+.article-facts { display: flex; flex-wrap: wrap; gap: 14px 40px; margin: 24px 0 0; padding-bottom: 24px; border-bottom: 1px solid var(--border-subtle); }
+.article-facts dt { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dimmed); }
+.article-facts dd { margin: 4px 0 0; font-size: 15px; color: var(--fg-2); }
+.article-gallery { margin: 32px 0 8px; }
 .more-insights > h2 { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; color: var(--fg); margin-bottom: 8px; }
 .more-insights-all { margin-top: 18px; }
 .article { padding-bottom: 32px; }
@@ -474,6 +479,11 @@ kbd {
 .reader[data-focus="on"] .reader-article [data-current] { opacity: 1; }
 .reader[data-focus="on"] .reader-article li[data-current] p, .reader[data-focus="on"] .reader-article blockquote[data-current] p { opacity: 1; }
 
+/* Owl mascot: bottom-right corner on every page, clear of the centred dock; raised above the dock on phones. */
+.site-mascot { position: fixed; z-index: 40; right: 16px; bottom: 6px; animation: mascot-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes mascot-in { from { opacity: 0; transform: translateY(12px); } }
+@media print { .site-mascot { display: none; } }
+
 /* ───────────── Responsive ───────────── */
 @media (max-width: 640px) {
   .banner { height: 180px; }
@@ -494,6 +504,8 @@ kbd {
   .article-signoff-actions { width: 100%; }
   .article-signoff-actions > * { flex: 1; justify-content: center; }
   .testimonial { padding: 24px 20px 20px; }
+  .site-mascot { right: 6px; bottom: 80px; }
+  .site-mascot > button { width: 80px !important; height: 80px !important; }
   .reader-bar-title, .reader-btn-label { display: none; }
   .reader-bar { gap: 6px; }
   .reader-left { flex: 1; }
@@ -516,6 +528,7 @@ kbd {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .hero-in { animation: none; }
+  .site-mascot { animation: none; }
   .reader-progress { transition: none; }
   .reader-trigger[data-intro] { animation: none; box-shadow: 0 0 0 2px var(--border); }
   .reader-spin { animation: none; }

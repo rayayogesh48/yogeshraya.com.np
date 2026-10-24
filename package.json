@@ -20,6 +20,7 @@
     "mdast-util-to-string": "^4.0.0",
     "motion": "^12.4.7",
     "next": "^15.2.0",
+    "page-mascot": "0.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-markdown": "^10.1.0",

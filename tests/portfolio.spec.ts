@@ -224,7 +224,7 @@ test("case studies list published related insights in frontmatter order", async 
 
   // A referenced draft stays hidden; the published reference still shows.
   await page.goto("/work/briz-local-marketplace-app-nepal");
-  await expect(page.getByRole("region", { name: "Related insights" }).getByRole("link")).toHaveCount(1);
+  await expect(page.getByRole("region", { name: "Related insights" }).getByRole("article")).toHaveCount(1);
 
   await page.goto("/work/karobar-app-product-design");
   await page.getByRole("region", { name: "Related insights" }).getByRole("link").first().click();
