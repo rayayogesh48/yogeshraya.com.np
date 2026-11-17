@@ -37,13 +37,13 @@ They try Google first. Nothing useful. They call the shop nearest to home, and t
 
 Somewhere on that walk, the feeling changes. It stops being a quick errand and becomes a small defeat. They're tired, the light is going, and the worst part is not knowing whether any of this effort will pay off. The item might be sitting on a shelf two streets away. They just have no way to see it.
 
-That feeling is what I kept in mind while designing Briz. And the part that bothered me most wasn't the walking. It was the dead end: the moment a search comes back empty and the customer is simply left alone with the problem.
+That feeling is what I kept in mind while designing [Briz](https://www.brizmarket.com/). And the part that bothered me most wasn't the walking. It was the dead end: the moment a search comes back empty and the customer is simply left alone with the problem.
 
-**In short:** Briz is a location-based marketplace app for Nepal, starting in Kathmandu, across web, iOS, and Android. It is built by Bytecare Technology, the makers of Karobar, where I work as a Product Designer. With Briz, customers can browse products from nearby stores. If an item isn't listed, they can request it and receive offers from relevant local sellers. The product focuses on product discovery, local commerce, and demand-driven shopping. This post covers the problem Briz solves, how I approached the design, and the main lesson so far: a search with no results is not a dead end, it is unmet demand.
+**In short:** [Briz](https://www.brizmarket.com/) is a location-based marketplace app for Nepal, starting in Kathmandu, across web, iOS, and Android. It is built by Bytecare Technology, the makers of [Karobar](https://www.karobarapp.com/), where I work as a Product Designer. With [Briz](https://www.brizmarket.com/), customers can browse products from nearby stores. If an item isn't listed, they can request it and receive offers from relevant local sellers. The product focuses on product discovery, local commerce, and demand-driven shopping. This post covers the problem [Briz](https://www.brizmarket.com/) solves, how I approached the design, and the main lesson so far: a search with no results is not a dead end, it is unmet demand.
 
 ## What problem does Briz solve for local shoppers and stores?
 
-The scene above is the problem Briz is built around. Customers often don't know which nearby stores carry a particular item, or whether it's available. Finding it can mean searching Google, calling multiple stores, messaging sellers, or visiting shops in person.
+The scene above is the problem [Briz](https://www.brizmarket.com/) is built around. Customers often don't know which nearby stores carry a particular item, or whether it's available. Finding it can mean searching Google, calling multiple stores, messaging sellers, or visiting shops in person.
 
 Many local stores do have the products people need, but their inventory isn't always visible online. Traditional marketplaces add a second limit: when a product isn't listed, customers hit a dead end.
 
@@ -53,7 +53,7 @@ The other side of the market has its own problem. Small and medium-sized busines
 
 ## What is Briz, and how does it help people find products nearby?
 
-Briz brings product discovery and customer requests into one local marketplace. Its idea fits in one line: **find it nearby, or request it.** The Briz experience has two paths.
+[Briz](https://www.brizmarket.com/) brings product discovery and customer requests into one local marketplace. Its idea fits in one line: **find it nearby, or request it.** The [Briz](https://www.brizmarket.com/) experience has two paths.
 
 ### Path 1: Discover what's available on Briz
 
@@ -67,17 +67,17 @@ This turns missing inventory into an opportunity to connect customer demand with
 
 ## How did I design the Briz marketplace app?
 
-I centered the work on making local shopping easier without adding unnecessary complexity. Five decisions shaped Briz.
+I centered the work on making local shopping easier without adding unnecessary complexity. Five decisions shaped [Briz](https://www.brizmarket.com/).
 
 1. **Start with the discovery problem.** The guiding question was simple: how can customers find products that are actually available near them? That meant prioritizing local relevance, store information, product availability, and fulfilment options.
-2. **Design a fallback for when search fails.** A missing product shouldn't end the customer journey. Briz's Request a Product feature gives customers another way forward instead of sending them elsewhere to search again.
+2. **Design a fallback for when search fails.** A missing product shouldn't end the customer journey. [Briz](https://www.brizmarket.com/)'s Request a Product feature gives customers another way forward instead of sending them elsewhere to search again.
 3. **Connect customers and sellers directly.** The request flow lets customers express demand and gives relevant sellers a chance to respond with offers. Direct communication helps both sides clarify details before choosing an option.
 4. **Reduce friction for local businesses.** Seller experiences focus on making it easier to set up a store profile, list products, receive requests, communicate with customers, and manage fulfilment.
 5. **Design for trust and clarity.** Store verification, clear product information, location details, and fulfilment options help customers understand who they're buying from and how they can receive their products.
 
 ## What is Briz teaching me about marketplace design?
 
-Building a marketplace is about more than building a catalog. Briz reinforced one principle for me: a good experience shouldn't stop working when the ideal scenario fails.
+Building a marketplace is about more than building a catalog. [Briz](https://www.brizmarket.com/) reinforced one principle for me: a good experience shouldn't stop working when the ideal scenario fails.
 
 A search with no results isn't necessarily the end of the journey. It can reveal unmet demand and give a local seller a reason to respond.
 
@@ -87,16 +87,16 @@ I've also learned to think beyond individual screens and design the whole market
 
 ## What we don't know yet about Briz
 
-Briz is still being improved, and this post does not report usage or outcome numbers, because none are established here. Questions I want answered through real use:
+[Briz](https://www.brizmarket.com/) is still being improved, and this post does not report usage or outcome numbers, because none are established here. Questions I want answered through real use:
 
-- How often do product requests on Briz receive offers from relevant sellers?
+- How often do product requests on [Briz](https://www.brizmarket.com/) receive offers from relevant sellers?
 - Do customers finish a transaction after comparing offers and chatting with a seller?
 - Is it easy enough for local businesses to set up a store profile and list products?
 
 ## What's next for Briz
 
-The next step is to keep improving product discovery, request creation, seller responses, and successful transactions on Briz. The goal is to make it easier for customers to find what they need while helping more local stores become visible to the people who need them.
+The next step is to keep improving product discovery, request creation, seller responses, and successful transactions on [Briz](https://www.brizmarket.com/). The goal is to make it easier for customers to find what they need while helping more local stores become visible to the people who need them.
 
-Briz is built around a simple idea: the product someone needs might already be nearby. They just need a better way to find it, and a way forward when they can't.
+[Briz](https://www.brizmarket.com/) is built around a simple idea: the product someone needs might already be nearby. They just need a better way to find it, and a way forward when they can't.
 
-*Briz is a product of Bytecare Technology, the makers of Karobar. Thank you to the Bytecare team for building it together.*
+*[Briz](https://www.brizmarket.com/) is a product of Bytecare Technology, the makers of [Karobar](https://www.karobarapp.com/). Thank you to the Bytecare team for building it together.*

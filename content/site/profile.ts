@@ -45,7 +45,7 @@ export const aboutData: AboutData = {
   company: { name: "Bytecare Technology", logo: "/images/logo/bytecare-logo.webp", href: "https://www.bytecaretech.com/" },
   products: [
     { name: "Karobar", logo: "/images/logo/karobar-logo.webp", href: "https://www.karobarapp.com/" },
-    { name: "Briz", logo: "/images/logo/briz-logo.webp", href: "https://www.brizmarket.com/en" },
+    { name: "Briz", logo: "/images/logo/briz-logo.webp", href: "https://www.brizmarket.com/" },
   ],
   studio: { name: "Overlays Studio", logo: "/images/logo/overlay-logo.webp", href: "https://overlays-studio.framer.website/" },
   role: "Product Designer",
@@ -91,11 +91,11 @@ export const strengths = [
 ];
 
 /** Companies and products shown in the About page logo strip. Entries without a logo show their initials. */
-export const workedWith: { name: string; logo?: string }[] = [
-  { name: "Overlays Studio", logo: "/images/logo/overlay-logo.webp" },
-  { name: "Karobar", logo: "/images/logo/karobar-logo.webp" },
-  { name: "Bytecare Technology", logo: "/images/logo/bytecare-logo.webp" },
-  { name: "Briz", logo: "/images/logo/briz-logo.webp" },
+export const workedWith: { name: string; logo?: string; href?: string }[] = [
+  { name: "Overlays Studio", logo: "/images/logo/overlay-logo.webp", href: "https://overlays-studio.framer.website/" },
+  { name: "Karobar", logo: "/images/logo/karobar-logo.webp", href: "https://www.karobarapp.com/" },
+  { name: "Bytecare Technology", logo: "/images/logo/bytecare-logo.webp", href: "https://www.bytecaretech.com/" },
+  { name: "Briz", logo: "/images/logo/briz-logo.webp", href: "https://www.brizmarket.com/" },
   { name: "InternSathi" },
   { name: "Lanceme Up" },
   { name: "Brand Builder" },

@@ -18,6 +18,7 @@ const experienceSchema = z.array(z.object({
   location: nonempty.optional(), logo: z.string().startsWith("/").optional(), summary: nonempty.optional(),
   contributions: z.array(nonempty).min(1),
   caseStudySlug: nonempty.optional(),
+  website: z.url().optional(),
 }));
 
 const catalog = validateCatalog();

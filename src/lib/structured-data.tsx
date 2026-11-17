@@ -22,7 +22,11 @@ export function personSchema(): Thing {
     ...(aboutData.portrait && siteUrl ? { image: absolute(aboutData.portrait) } : {}),
     ...(aboutData.email ? { email: `mailto:${aboutData.email}` } : {}),
     address: { "@type": "PostalAddress", addressLocality: "Kathmandu", addressCountry: "NP" },
-    worksFor: current.map((item) => ({ "@type": "Organization", name: item.company })),
+    worksFor: current.map((item) => ({
+      "@type": "Organization",
+      name: item.company,
+      ...(item.website ? { url: item.website } : {}),
+    })),
     knowsAbout: ["Product design", "UX design", "UI design", "User research", "Interaction design", "Framer"],
     sameAs: Object.values(aboutData.socials).filter(Boolean),
   };

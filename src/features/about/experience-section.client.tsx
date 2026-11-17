@@ -68,12 +68,20 @@ function ExperienceEntry({ item }: { item: ExperienceItem }) {
                     </motion.li>
                   ))}
                 </ul>
-                {item.caseStudySlug && (
-                  <Link className="exp-link" href={`/work/${item.caseStudySlug}`}>
-                    Explore the work
-                    <ArrowUpRightIcon size={13} />
-                  </Link>
-                )}
+                <div className="exp-links">
+                  {item.caseStudySlug && (
+                    <Link className="exp-link" href={`/work/${item.caseStudySlug}`}>
+                      Explore the work
+                      <ArrowUpRightIcon size={13} />
+                    </Link>
+                  )}
+                  {item.website && (
+                    <a className="exp-link" href={item.website} target="_blank" rel="noopener noreferrer">
+                      Visit {item.company}
+                      <ArrowUpRightIcon size={13} />
+                    </a>
+                  )}
+                </div>
               </div>
             </motion.div>
           )}

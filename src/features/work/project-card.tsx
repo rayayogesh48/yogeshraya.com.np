@@ -12,7 +12,7 @@ import { ProjectCarousel } from "./project-carousel.client";
 export function ProjectCard({ study, index = 0 }: { study: WorkSummary; index?: number }) {
   const images = study.gallery ?? (study.cover ? [study.cover] : []);
   const href = `/work/${study.slug}`;
-  const shortTitle = study.title.split(" — ")[0];
+  const shortTitle = study.title.split(/ [—:] /)[0];
 
   return (
     <motion.article variants={staggerItem} className="project-card">

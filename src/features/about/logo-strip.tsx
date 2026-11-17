@@ -9,9 +9,9 @@ function initials(name: string) {
     .join("");
 }
 
-function LogoItem({ name, logo }: { name: string; logo?: string }) {
-  return (
-    <li className="logo-item">
+function LogoItem({ name, logo, href }: { name: string; logo?: string; href?: string }) {
+  const content = (
+    <>
       {logo ? (
         <img className="logo-mark" src={logo} alt="" width={24} height={24} loading="lazy" />
       ) : (
@@ -20,6 +20,18 @@ function LogoItem({ name, logo }: { name: string; logo?: string }) {
         </span>
       )}
       <span>{name}</span>
+    </>
+  );
+
+  return (
+    <li className="logo-item">
+      {href ? (
+        <a href={href} target="_blank" rel="noopener noreferrer" className="logo-link">
+          {content}
+        </a>
+      ) : (
+        content
+      )}
     </li>
   );
 }

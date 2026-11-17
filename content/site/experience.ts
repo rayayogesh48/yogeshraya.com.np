@@ -8,6 +8,7 @@ export interface ExperienceItem {
   summary?: string;
   contributions: string[];
   caseStudySlug?: string;
+  website?: string;
 }
 
 export const experiences: ExperienceItem[] = [
@@ -17,6 +18,7 @@ export const experiences: ExperienceItem[] = [
     period: "Dec 2025 - Present",
     location: "Kathmandu, Nepal",
     logo: "/images/logo/overlay-logo.webp",
+    website: "https://overlays-studio.framer.website/",
     summary:
       "Working with startups and agencies to design and build websites and landing pages in Framer, focused on clarity, usability, and speed to launch.",
     contributions: [
@@ -32,6 +34,7 @@ export const experiences: ExperienceItem[] = [
     period: "Apr 2023 - Present",
     location: "Lalitpur, Nepal",
     logo: "/images/logo/karobar-logo.webp",
+    website: "https://www.karobarapp.com/",
     summary:
       "Creating user-friendly designs that make products easy to use and visually appealing, from understanding user needs to working closely with developers to bring everything together.",
     contributions: [

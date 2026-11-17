@@ -39,7 +39,7 @@ test.describe("home page", () => {
   });
 
   test("single-image projects hide carousel controls", async ({ page }) => {
-    const card = page.locator(".project-card").filter({ hasText: "Designing the Karobar App" });
+    const card = page.locator(".project-card").filter({ hasText: "Karobar" });
     await expect(card.locator('img[src="/images/case-studies/karobar-redesign.webp"]')).toBeVisible();
     await expect(card.getByRole("button", { name: "Next slide" })).toHaveCount(0);
   });
