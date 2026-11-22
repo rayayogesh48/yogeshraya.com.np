@@ -5,7 +5,7 @@ date: "2026-10-18"
 updated: null
 cover: null
 coverAlt: null
-status: "published"
+status: "draft"
 ---
 
 Visitors rarely notice the details that work. They notice the ones that don't: a highlight that jumps, a hover that only covers half a row, a card that says "Not shared yet". This week I went through this site looking for exactly those moments.
