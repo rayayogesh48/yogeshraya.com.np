@@ -11,8 +11,8 @@ const publicRoutes = [
   "/insight",
   "/work/karobar-app-product-design",
   "/work/briz-local-marketplace-app-nepal",
-  "/insight/designing-clearer-product-flows",
-  "/insight/what-should-a-dashboard-show-first",
+  "/insight/only-designer-at-a-company",
+  "/insight/how-i-read-as-a-product-designer",
 ];
 
 for (const width of [320, 390, 1440]) {
@@ -140,7 +140,7 @@ for (const theme of ["Light", "Dark"]) {
       "/",
       "/about",
       "/work",
-      "/insight/designing-clearer-product-flows",
+      "/insight/only-designer-at-a-company",
     ]) {
       await page.goto(route);
       await auditAccessibility(page);
@@ -151,8 +151,9 @@ for (const theme of ["Light", "Dark"]) {
 test("drafts and unknown content return 404 and stay out of discovery", async ({
   request,
 }) => {
+  const drafts = ["better-product-design-feedback", "designing-clearer-product-flows", "what-should-a-dashboard-show-first"];
   for (const route of [
-    "/insight/better-product-design-feedback",
+    ...drafts.map((slug) => `/insight/${slug}`),
     "/insight/missing",
     "/work/missing",
     "/craft/missing",
@@ -162,10 +163,9 @@ test("drafts and unknown content return 404 and stay out of discovery", async ({
   ]) {
     expect((await request.get(route)).status(), route).toBe(404);
   }
-  for (const route of ["/", "/insight", "/sitemap.xml"]) {
-    expect(await (await request.get(route)).text()).not.toContain(
-      "better-product-design-feedback",
-    );
+  for (const route of ["/", "/insight", "/sitemap.xml", "/work/karobar-app-product-design"]) {
+    const html = await (await request.get(route)).text();
+    for (const slug of drafts) expect(html, `${route} links ${slug}`).not.toContain(`/insight/${slug}`);
   }
   const sitemap = await (await request.get("/sitemap.xml")).text();
   expect(sitemap).not.toContain("example.com");
@@ -213,22 +213,16 @@ test("reduced motion and mobile settings preserve usable controls", async ({
   ).toBeVisible();
 });
 
-test("case studies list published related insights in frontmatter order", async ({ page }) => {
-  await page.goto("/work/karobar-app-product-design");
-  const related = page.getByRole("region", { name: "Related insights" });
-  await expect(related.getByRole("heading", { level: 3 })).toHaveText([
-    "What should a product dashboard show first?",
-    "Designing clearer product flows",
-  ]);
-  await expect(related.getByRole("link").first()).toHaveAttribute("href", "/insight/what-should-a-dashboard-show-first");
+test("case studies hide related insights that are still drafts", async ({ page }) => {
+  // Every insight these case studies reference is a draft for now, so the section doesn't render at all.
+  for (const route of ["/work/karobar-app-product-design", "/work/briz-local-marketplace-app-nepal", "/work/trackon-gps-product-design"]) {
+    await page.goto(route);
+    await expect(page.getByRole("region", { name: "Related insights" }), route).toHaveCount(0);
+  }
 
-  // A referenced draft stays hidden; the published reference still shows.
-  await page.goto("/work/briz-local-marketplace-app-nepal");
-  await expect(page.getByRole("region", { name: "Related insights" }).getByRole("article")).toHaveCount(1);
-
-  await page.goto("/work/karobar-app-product-design");
-  await page.getByRole("region", { name: "Related insights" }).getByRole("link").first().click();
-  await expect(page).toHaveURL(/\/insight\/what-should-a-dashboard-show-first$/, { timeout: NAVIGATION_TIMEOUT });
+  await page.goto("/insight");
+  await page.getByRole("link", { name: /only designer/i }).first().click();
+  await expect(page).toHaveURL(/\/insight\/only-designer-at-a-company$/, { timeout: NAVIGATION_TIMEOUT });
   await expect(page.getByRole("link", { name: "Back to Insights" }).first()).toBeVisible();
 });
 

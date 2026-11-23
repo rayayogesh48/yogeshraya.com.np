@@ -50,7 +50,8 @@ export function LogoStrip() {
               <LogoItem key={item.name} {...item} />
             ))}
           </ul>
-          <ul className="logo-set" aria-hidden="true">
+          {/* The copy only makes the loop seamless; inert keeps its links out of the tab order and screen readers. */}
+          <ul className="logo-set" aria-hidden="true" inert>
             {workedWith.map((item) => (
               <LogoItem key={item.name} {...item} />
             ))}

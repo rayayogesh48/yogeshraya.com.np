@@ -5,7 +5,7 @@ date: "2026-08-15"
 updated: null
 cover: null
 coverAlt: null
-status: "published"
+status: "draft"
 ---
 
 When teams design dashboards, the initial instinct is usually to fill the top of the viewport with large graphical charts: line graphs displaying revenue trajectories, pie charts showing distribution breakdowns, and colorful trend bars.

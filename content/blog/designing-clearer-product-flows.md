@@ -5,7 +5,7 @@ date: "2026-09-23"
 updated: null
 cover: "/images/blog/flow-diagram.svg"
 coverAlt: "Step-by-step diagram showing simplification of branching user decisions into a linear flow"
-status: "published"
+status: "draft"
 ---
 
 When software feels sluggish or confusing, the culprit is rarely aesthetic—it is almost always an overloaded decision tree. Users arrive at a screen with one primary intent, but interfaces frequently present three equivalent paths forward.
